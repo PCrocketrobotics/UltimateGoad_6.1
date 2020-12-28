@@ -21,12 +21,10 @@ public class RingControl {
         ringintake.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         ringintake.setPower(0);
     }
-    public void DriverControlledRingIntake(){
-        float ringintakepower;
-        ringintakepower = robot.opMode.gamepad1.right_trigger;
-        ringintake.setPower(ringintakepower);
+    public void DriverControlledRingIntake(double ringpower){
+        ringintake.setPower(ringpower);
         robot.opMode.telemetry.addLine("Ring Intake Speed")
-                .addData("Right", "%.3f", ringintakepower);
+                .addData("Right", "%.3f", ringpower);
     }
     public void DriverControlledRingShooter(){
 

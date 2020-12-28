@@ -35,10 +35,12 @@ public class DriverControlled extends LinearOpMode {
         robot.getWobbleGripper().init();
         robot.getRingControl().init();
         robot.getImuControl().init();
+
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Robot Initialized ... ", "DONE");    //
         robot.getImuControl().readimuheading();
         telemetry.update();
+
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         // clear telemetry to clean up screen
@@ -47,15 +49,36 @@ public class DriverControlled extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
                 robot.getDriveTrain().DriverControlled_Drive();
-                robot.getRingControl().DriverControlledRingIntake();
+                robot.getRingControl().DriverControlledRingIntake(1.0);
                 robot.getRingControl().DriverControlledRingShooter();
                 robot.getWobbleGripper().DriverControlled_WobbleServo();
                 robot.getImuControl().readimuheading();
                 if (gamepad1.b) {
-                    robot.getDriveTrain().imuTurn(0);
+                    robot.getDriveTrain().imuTurnLocal(-90);
                 }
                 if (gamepad1.x){
-                    robot.getDriveTrain().imuTurn(179);
+                    robot.getDriveTrain().imuTurnLocal(90);
+                }
+                if (gamepad1.start){
+                    robot.getDriveTrain().imuTurnGlobal(0);
+                }
+                if (gamepad1.left_trigger != 0){
+                    robot.getDriveTrain().left_back.setPower(gamepad1.left_trigger);
+                    robot.getDriveTrain().left_front.setPower(gamepad1.left_trigger);
+                    robot.getDriveTrain().right_back.setPower(-gamepad1.left_trigger);
+                    robot.getDriveTrain().right_front.setPower(-gamepad1.left_trigger);
+                }
+                if (gamepad1.right_trigger != 0){
+                    robot.getDriveTrain().left_back.setPower(-gamepad1.left_trigger);
+                    robot.getDriveTrain().left_front.setPower(-gamepad1.left_trigger);
+                    robot.getDriveTrain().right_back.setPower(gamepad1.left_trigger);
+                    robot.getDriveTrain().right_front.setPower(gamepad1.left_trigger);
+                }
+                if (gamepad1.a){
+                    robot.getRingControl().DriverControlledRingIntake(1.0);
+                }
+                else {
+                    robot.getRingControl().DriverControlledRingIntake(0.0);
                 }
                 telemetry.update();
                 telemetry.clearAll();

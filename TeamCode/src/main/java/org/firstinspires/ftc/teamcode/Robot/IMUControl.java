@@ -15,10 +15,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 import java.util.Locale;
 
 public class IMUControl {
-    public  BNO055IMU imu;
-    public Orientation        angles;
-    public Acceleration       gravity;
-    public double StartingHeading;
+    public BNO055IMU    imu;
+    public Orientation  angles;
+    public Acceleration gravity;
+    public double       StartingHeading;
     Robot robot;
 
     public IMUControl(Robot robot) {

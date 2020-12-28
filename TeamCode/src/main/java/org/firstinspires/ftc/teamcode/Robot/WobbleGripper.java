@@ -19,7 +19,7 @@ public class WobbleGripper {
     }
     public void DriverControlled_WobbleServo(){
         String wobblepostion = "CLOSE";
-        if (robot.opMode.gamepad1.a){
+        if (robot.opMode.gamepad2.a){
             wobblepostion = "OPEN";
         }
         SetWobbleGripper(wobblepostion);

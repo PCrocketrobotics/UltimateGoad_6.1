@@ -23,16 +23,16 @@ public class MecanumDriveTrain {
     //imu variable.
     private static final double HEADING_THRESHOLD      = 1;
     static final double         P_TURN_COEFF           = 0.1;
-    static final double         P_DRIVE_COEFF          = 0.15;
+    static final double         P_DRIVE_COEFF          = 0.15; //Originally 0.15
 
     float hsvValues[]      = {0F, 0F, 0F};
     final float values[]   = hsvValues;
     final int SCALE_FACTOR = 255;
 
-    public DcMotorEx          left_front;
-    public DcMotorEx          left_back;
-    public DcMotorEx          right_front;
-    public DcMotorEx          right_back;
+    public DcMotorEx left_front;
+    public DcMotorEx left_back;
+    public DcMotorEx right_front;
+    public DcMotorEx right_back;
 
     RevColorSensorV3   colorSensor;
 
@@ -44,15 +44,17 @@ public class MecanumDriveTrain {
 
     public void init() {
         //Wheel Drive Motors Setup / init
-        left_front = robot.opMode.hardwareMap.get(DcMotorEx.class, "left_front");
-        left_back = robot.opMode.hardwareMap.get(DcMotorEx.class, "left_back");
+        left_front  = robot.opMode.hardwareMap.get(DcMotorEx.class, "left_front");
+        left_back   = robot.opMode.hardwareMap.get(DcMotorEx.class, "left_back");
         right_front = robot.opMode.hardwareMap.get(DcMotorEx.class, "right_front");
-        right_back = robot.opMode.hardwareMap.get(DcMotorEx.class, "right_back");
+        right_back  = robot.opMode.hardwareMap.get(DcMotorEx.class, "right_back");
+
        // Set Direction of Each Drive Motor to keep Speeds identical between all motors.
         left_front.setDirection(DcMotorEx.Direction.FORWARD);
         left_back.setDirection(DcMotorEx.Direction.FORWARD);
         right_front.setDirection(DcMotorEx.Direction.REVERSE);
         right_back.setDirection(DcMotorEx.Direction.REVERSE);
+
         // Init all motors to zero power
         left_front.setPower(0);
         right_front.setPower(0);
@@ -96,10 +98,10 @@ public class MecanumDriveTrain {
         right_back.setPower(power_right_back);
 
         robot.opMode.telemetry.addLine("Front Wheel Power")
-                .addData("Left", "%.3f", power_left_front)
+                .addData("Left",  "%.3f", power_left_front)
                 .addData("Right", "%.3f", power_right_front);
         robot.opMode.telemetry.addLine("Rear Wheel Power")
-                .addData("Left", "%.3f", power_left_back)
+                .addData("Left",  "%.3f", power_left_back)
                 .addData("Right", "%.3f", power_right_back);
     }
     public void AutonomousDrive(double leftFront,  double leftBack,
@@ -186,30 +188,43 @@ public class MecanumDriveTrain {
         right_front.setPower(0);
         right_back.setPower(0);
     }
-    public void imuTurn(double targetangle){
+    public void imuTurnGlobal(double targetangle){
         //Assumes Heading of 0 at initilization and orientation is placed by the team.
         double errorangle = 1;
         double minerror=0;
         double maxerror=0;
         double currentangle;
+        double totalarc;
+        double throttle;
 
         currentangle = robot.imuControl.readimuheading();
 
         minerror = targetangle - errorangle;
         maxerror = targetangle + errorangle;
 
+
+        totalarc = targetangle - currentangle;
+
         while (currentangle > maxerror || currentangle < minerror){
+            if (((targetangle - currentangle) / totalarc) < .7) {
+                throttle = 0.5;
+            }
+            else {
+                throttle = 1.0;
+            }
+
+
             if (currentangle > targetangle){
-                robot.driveTrain.left_front.setPower(.05);
-                robot.driveTrain.left_back.setPower(.05);
-                robot.driveTrain.right_front.setPower(-.05);
-                robot.driveTrain.right_back.setPower(-.05);
+                robot.driveTrain.left_front.setPower(.05   * throttle);
+                robot.driveTrain.left_back.setPower(.05    * throttle);
+                robot.driveTrain.right_front.setPower(-.05 * throttle);
+                robot.driveTrain.right_back.setPower(-.05  * throttle);
             }
             if (currentangle < targetangle){
-                robot.driveTrain.left_front.setPower(-.05);
-                robot.driveTrain.left_back.setPower(-.05);
-                robot.driveTrain.right_front.setPower(.05);
-                robot.driveTrain.right_back.setPower(.05);
+                robot.driveTrain.left_front.setPower(-.05 * throttle);
+                robot.driveTrain.left_back.setPower(-.05  * throttle);
+                robot.driveTrain.right_front.setPower(.05 * throttle);
+                robot.driveTrain.right_back.setPower(.05  * throttle);
             }
             currentangle = robot.imuControl.readimuheading();
 
@@ -223,6 +238,10 @@ public class MecanumDriveTrain {
             robot.opMode.telemetry.update();
         }
         robot.opMode.telemetry.clearAll();
+    }
+
+    public void imuTurnLocal(double providedangle){
+        imuTurnGlobal(robot.imuControl.readimuheading() + providedangle);
     }
 
     public void gyroDrive ( double left_front_power,  double left_back_power,
@@ -249,14 +268,14 @@ public class MecanumDriveTrain {
         // Ensure that the opmode is still active
 
             // Determine new target position, and pass to motor controller
-            left_front_counts      = (int)(left_front_power * COUNTS_PER_INCH_DOUBLE);
-            left_back_counts       = (int)(left_back_power * COUNTS_PER_INCH_DOUBLE);
-            right_back_counts      = (int)(right_back_power * COUNTS_PER_INCH_DOUBLE);
+            left_front_counts      = (int)(left_front_power  * COUNTS_PER_INCH_DOUBLE);
+            left_back_counts       = (int)(left_back_power   * COUNTS_PER_INCH_DOUBLE);
+            right_back_counts      = (int)(right_back_power  * COUNTS_PER_INCH_DOUBLE);
             right_front_counts     = (int)(right_front_power * COUNTS_PER_INCH_DOUBLE);
-            new_left_front_target  = left_front.getCurrentPosition() + left_front_counts;
+            new_left_front_target  = left_front.getCurrentPosition()  + left_front_counts;
             new_right_front_target = right_front.getCurrentPosition() + right_front_counts;
-            new_left_back_target   = left_back.getCurrentPosition() + left_back_counts;
-            new_right_back_target  = right_back.getCurrentPosition() + right_back_counts;
+            new_left_back_target   = left_back.getCurrentPosition()   + left_back_counts;
+            new_right_back_target  = right_back.getCurrentPosition()  + right_back_counts;
 
             // Set Target and Turn On RUN_TO_POSITION
             left_front.setTargetPosition(new_left_front_target);

@@ -35,6 +35,7 @@ public class Autonomous extends LinearOpMode {
                 ringpattern = robot.getComputerVision().detect();
                 sleep(500);
 
+                //looks at the amount of rings and returns a value based on how many it sees
                 if (ringpattern == "None") {
                     Target_Zone = 0 ;
                 }
