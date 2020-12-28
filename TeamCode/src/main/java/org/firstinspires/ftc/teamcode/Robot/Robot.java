@@ -1,22 +1,6 @@
 package org.firstinspires.ftc.teamcode.Robot;
 
-import com.qualcomm.hardware.bosch.BNO055IMU;
-import org.firstinspires.ftc.robotcore.external.Func;
-import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.robotcore.external.navigation.Position;
-import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
-import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
-
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.ColorSensor;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.HardwareDevice;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class Robot {
@@ -25,6 +9,7 @@ public class Robot {
     ComputerVision computerVision;
     WobbleGripper wobbleGripper;
     RingControl   ringControl;
+    IMUControl    imuControl;
 
     ElapsedTime autonomusTime;
     final LinearOpMode opMode;
@@ -36,6 +21,7 @@ public class Robot {
         this.computerVision = new ComputerVision(this);
         this.wobbleGripper = new WobbleGripper(this);
         this.ringControl = new RingControl(this);
+        this.imuControl = new IMUControl(this);
 
     }
 
@@ -43,4 +29,5 @@ public class Robot {
     public ComputerVision getComputerVision()  {return this.computerVision;}
     public WobbleGripper getWobbleGripper()    {return  this.wobbleGripper;}
     public RingControl getRingControl()        {return  this.ringControl;}
+    public IMUControl getImuControl()           {return this.imuControl;}
 }

@@ -34,8 +34,10 @@ public class DriverControlled extends LinearOpMode {
         robot.getDriveTrain().init();
         robot.getWobbleGripper().init();
         robot.getRingControl().init();
+        robot.getImuControl().init();
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Robot Initialized ... ", "DONE");    //
+        robot.getImuControl().readimuheading();
         telemetry.update();
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -48,7 +50,15 @@ public class DriverControlled extends LinearOpMode {
                 robot.getRingControl().DriverControlledRingIntake();
                 robot.getRingControl().DriverControlledRingShooter();
                 robot.getWobbleGripper().DriverControlled_WobbleServo();
+                robot.getImuControl().readimuheading();
+                if (gamepad1.b) {
+                    robot.getDriveTrain().imuTurn(0);
+                }
+                if (gamepad1.x){
+                    robot.getDriveTrain().imuTurn(179);
+                }
                 telemetry.update();
+                telemetry.clearAll();
             // PROGRAM ENDS HERE -------------------------------------------------------------------------------------
         }
     }

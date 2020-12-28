@@ -7,17 +7,6 @@ import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareDevice;
-
-import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
-import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.robotcore.external.navigation.Position;
-import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
-
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -31,6 +20,7 @@ public class MecanumDriveTrain {
     static final double         DRIVE_GEAR_REDUCTION   = 10.5;    // Rev Ultraplanetary Motor 12:1 but actual is 10.5:1
     static final double         WHEEL_DIAMETER_INCHES  = 3.0;     // For figuring circumference
     static final double         COUNTS_PER_INCH_DOUBLE = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.1415);
+    //imu variable.
     private static final double HEADING_THRESHOLD      = 1;
     static final double         P_TURN_COEFF           = 0.1;
     static final double         P_DRIVE_COEFF          = 0.15;
@@ -39,16 +29,12 @@ public class MecanumDriveTrain {
     final float values[]   = hsvValues;
     final int SCALE_FACTOR = 255;
 
-    DcMotorEx          left_front;
-    DcMotorEx          left_back;
-    DcMotorEx          right_front;
-    DcMotorEx          right_back;
+    public DcMotorEx          left_front;
+    public DcMotorEx          left_back;
+    public DcMotorEx          right_front;
+    public DcMotorEx          right_back;
 
     RevColorSensorV3   colorSensor;
-
-    BNO055IMU          imu;
-    Orientation        angles;
-    Acceleration       gravity;
 
     Robot robot;
 
@@ -58,7 +44,7 @@ public class MecanumDriveTrain {
 
     public void init() {
         //Wheel Drive Motors Setup / init
-       left_front = robot.opMode.hardwareMap.get(DcMotorEx.class, "left_front");
+        left_front = robot.opMode.hardwareMap.get(DcMotorEx.class, "left_front");
         left_back = robot.opMode.hardwareMap.get(DcMotorEx.class, "left_back");
         right_front = robot.opMode.hardwareMap.get(DcMotorEx.class, "right_front");
         right_back = robot.opMode.hardwareMap.get(DcMotorEx.class, "right_back");
@@ -145,11 +131,9 @@ public class MecanumDriveTrain {
         left_front.setPower(Math.abs(motor_power));
         right_front.setPower(Math.abs(motor_power));
 
-
         while (right_back.isBusy() && left_back.isBusy() && left_front.isBusy() && right_front.isBusy()){
 
         }
-
     }
     public void moveToColor(String targetColor, double motor_power){
         Color.RGBToHSV(colorSensor.red() * SCALE_FACTOR, colorSensor.green() * SCALE_FACTOR, colorSensor.blue() * SCALE_FACTOR, hsvValues);
@@ -201,6 +185,44 @@ public class MecanumDriveTrain {
         left_back.setPower(0);
         right_front.setPower(0);
         right_back.setPower(0);
+    }
+    public void imuTurn(double targetangle){
+        //Assumes Heading of 0 at initilization and orientation is placed by the team.
+        double errorangle = 1;
+        double minerror=0;
+        double maxerror=0;
+        double currentangle;
+
+        currentangle = robot.imuControl.readimuheading();
+
+        minerror = targetangle - errorangle;
+        maxerror = targetangle + errorangle;
+
+        while (currentangle > maxerror || currentangle < minerror){
+            if (currentangle > targetangle){
+                robot.driveTrain.left_front.setPower(.05);
+                robot.driveTrain.left_back.setPower(.05);
+                robot.driveTrain.right_front.setPower(-.05);
+                robot.driveTrain.right_back.setPower(-.05);
+            }
+            if (currentangle < targetangle){
+                robot.driveTrain.left_front.setPower(-.05);
+                robot.driveTrain.left_back.setPower(-.05);
+                robot.driveTrain.right_front.setPower(.05);
+                robot.driveTrain.right_back.setPower(.05);
+            }
+            currentangle = robot.imuControl.readimuheading();
+
+            robot.opMode.telemetry.addLine("Starting Angle")
+                    .addData("Starting Angle", "%.3f", robot.imuControl.StartingHeading);
+            robot.opMode.telemetry.addLine("Current Angle")
+                    .addData("Current Angle", "%.3f", currentangle);
+            robot.opMode.telemetry.addLine("Error Angle")
+                    .addData("Min Error Angle", "%.3f", minerror)
+                    .addData("Max Error Angle", "%.3f", maxerror);
+            robot.opMode.telemetry.update();
+        }
+        robot.opMode.telemetry.clearAll();
     }
 
     public void gyroDrive ( double left_front_power,  double left_back_power,
@@ -345,27 +367,14 @@ public class MecanumDriveTrain {
     public double getError(double targetAngle) {
 
         double robotError;
-
         // calculate error in -179 to +180 range  (
-        robotError = targetAngle - readimu();
+        robotError = targetAngle - robot.imuControl.readimuheading();
         while (robotError > 180)  robotError -= 360;
         while (robotError <= -180) robotError += 360;
         return robotError;
     }
-
     public double getSteer(double error, double PCoeff) {
         return Range.clip(error * PCoeff, -1, 1);
     }
-    public float readimu(){
-        imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
-        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        gravity = imu.getGravity();
-        return angles.firstAngle;
-    }
-    String formatAngle(AngleUnit angleunit, double angle){
-        return formatDegrees(AngleUnit.DEGREES.fromUnit(angleunit, angle));
-    }
-    String formatDegrees(double degrees){
-        return  String.format(Locale.getDefault(), "%.1f", AngleUnit.DEGREES.normalize(degrees));
-    }
+
 }
