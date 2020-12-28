@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class RingControl {
     DcMotorEx     ringintake;
+    DcMotorEx     ringshooterleft;
+    DcMotorEx     ringshooterright;
 
     Robot robot;
 
@@ -27,6 +29,11 @@ public class RingControl {
                 .addData("Right", "%.3f", ringpower);
     }
     public void DriverControlledRingShooter(){
-
+        ringshooterleft.setPower(-1.0);
+        ringshooterright.setPower(1.0);
+        //To be continued
+    }
+    public void ConstantRingShooter(){
+        //To be continued
     }
 }

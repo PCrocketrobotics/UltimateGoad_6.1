@@ -54,7 +54,9 @@ public class Autonomous extends LinearOpMode {
                 telemetry.update();
                 sleep(1800);
                 if (Target_Zone == 0) {
-                    break;
+                    robot.getDriveTrain().moveToColor("red", .6);
+
+                    
                 }
                 else if (Target_Zone == 1) {
                     break;

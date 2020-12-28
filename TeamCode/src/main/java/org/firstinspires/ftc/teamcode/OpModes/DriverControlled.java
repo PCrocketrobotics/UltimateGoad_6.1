@@ -49,10 +49,9 @@ public class DriverControlled extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
                 robot.getDriveTrain().DriverControlled_Drive();
-                robot.getRingControl().DriverControlledRingIntake(1.0);
-                robot.getRingControl().DriverControlledRingShooter();
-                robot.getWobbleGripper().DriverControlled_WobbleServo();
-                robot.getImuControl().readimuheading();
+                //robot.getImuControl().readimuheading();
+
+                //Gamepad 1
                 if (gamepad1.b) {
                     robot.getDriveTrain().imuTurnLocal(-90);
                 }
@@ -80,6 +79,25 @@ public class DriverControlled extends LinearOpMode {
                 else {
                     robot.getRingControl().DriverControlledRingIntake(0.0);
                 }
+
+
+
+                //Gamepad 2
+                if (gamepad2.a){
+                    robot.getWobbleGripper().setWobbleGripper(0.5);
+                }
+                else{
+                    robot.getWobbleGripper().setWobbleGripper(0.0);
+                }
+                if (gamepad2.left_stick_y != 0) {
+                    robot.getWobbleGripper().setArmPower(gamepad2.left_stick_y);
+                }
+
+                robot.getRingControl().ConstantRingShooter();
+                if (gamepad2.right_trigger != 0){
+                    robot.getRingControl().DriverControlledRingShooter();
+                }
+
                 telemetry.update();
                 telemetry.clearAll();
             // PROGRAM ENDS HERE -------------------------------------------------------------------------------------

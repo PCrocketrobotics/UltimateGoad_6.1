@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.Robot;
 
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class WobbleGripper {
     static final double MAX_POS     = 1.0;
     static final double MIN_POS     = 0.0;
-    Servo   wobbleservo;
+    Servo     wobbleservo;
+    DcMotorEx wobblearm;
     Robot robot;
 
     public WobbleGripper(Robot robot) {
@@ -15,26 +17,19 @@ public class WobbleGripper {
     public void init() {
         //Wheel Drive Motors Setup
         wobbleservo = robot.opMode.hardwareMap.get(Servo.class, "wobbleservo");
+        wobblearm =   robot.opMode.hardwareMap.get(DcMotorEx.class, "wobblearm");
         wobbleservo.setPosition(0);
     }
-    public void DriverControlled_WobbleServo(){
-        String wobblepostion = "CLOSE";
-        if (robot.opMode.gamepad2.a){
-            wobblepostion = "OPEN";
-        }
-        SetWobbleGripper(wobblepostion);
-    }
-    private void SetWobbleGripper(String wobbleposition){
-        double wobblelocation =0;
-        if (wobbleposition == "OPEN"){
-            wobblelocation = 0.5;
-        }
-        if (wobbleposition == "CLOSE"){
-            wobblelocation = 0;
-        }
-        wobbleservo.setPosition(wobblelocation);
+
+    public  void  setArmPower(double wobblepower){
+        wobblearm.setPower(wobblepower);
+    };
+
+    public void setWobbleGripper(double wobbleposition){
+
+        wobbleservo.setPosition(wobbleposition);
         double currentwobbleposition = wobbleservo.getPosition();
-        while (currentwobbleposition != wobblelocation){
+        while (currentwobbleposition != wobbleposition){
             //wait until in position
         }
 
