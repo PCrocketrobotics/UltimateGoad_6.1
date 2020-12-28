@@ -215,16 +215,16 @@ public class MecanumDriveTrain {
 
 
             if (currentangle > targetangle){
-                robot.driveTrain.left_front.setPower(.05   * throttle);
-                robot.driveTrain.left_back.setPower(.05    * throttle);
-                robot.driveTrain.right_front.setPower(-.05 * throttle);
-                robot.driveTrain.right_back.setPower(-.05  * throttle);
+                robot.driveTrain.left_front.setPower(.3   * throttle);
+                robot.driveTrain.left_back.setPower(.3    * throttle);
+                robot.driveTrain.right_front.setPower(-.3 * throttle);
+                robot.driveTrain.right_back.setPower(-.3  * throttle);
             }
             if (currentangle < targetangle){
-                robot.driveTrain.left_front.setPower(-.05 * throttle);
-                robot.driveTrain.left_back.setPower(-.05  * throttle);
-                robot.driveTrain.right_front.setPower(.05 * throttle);
-                robot.driveTrain.right_back.setPower(.05  * throttle);
+                robot.driveTrain.left_front.setPower(-.3 * throttle);
+                robot.driveTrain.left_back.setPower(-.3  * throttle);
+                robot.driveTrain.right_front.setPower(.3 * throttle);
+                robot.driveTrain.right_back.setPower(.3  * throttle);
             }
             currentangle = robot.imuControl.readimuheading();
 
@@ -313,10 +313,10 @@ public class MecanumDriveTrain {
                 max = Math.max(Math.abs(left_front_speed), Math.max(Math.abs(right_front_speed), Math.max(Math.abs(left_back_speed), Math.abs(right_back_speed))));
                 if (max > 1.0)
                 {
-                    left_front_speed /= max;
+                    left_front_speed  /= max;
                     right_front_speed /= max;
-                    left_back_speed /= max;
-                    right_back_speed /= max;
+                    left_back_speed   /= max;
+                    right_back_speed  /= max;
                 }
 
                 left_front.setPower(motor_power);
@@ -388,7 +388,7 @@ public class MecanumDriveTrain {
         double robotError;
         // calculate error in -179 to +180 range  (
         robotError = targetAngle - robot.imuControl.readimuheading();
-        while (robotError > 180)  robotError -= 360;
+        while (robotError >   180) robotError -= 360;
         while (robotError <= -180) robotError += 360;
         return robotError;
     }

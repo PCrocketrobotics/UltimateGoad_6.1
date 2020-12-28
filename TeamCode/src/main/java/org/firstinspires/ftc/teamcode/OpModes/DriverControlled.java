@@ -24,6 +24,9 @@ public class DriverControlled extends LinearOpMode {
 
     /* Declare OpMode members. */
     Robot robot  = new Robot(this);
+    boolean toggle_a;
+    boolean toggle_y;
+    double ringtogglespeed;
 
     @Override
     public void runOpMode() {
@@ -61,24 +64,30 @@ public class DriverControlled extends LinearOpMode {
                 if (gamepad1.start){
                     robot.getDriveTrain().imuTurnGlobal(0);
                 }
-                if (gamepad1.left_trigger != 0){
-                    robot.getDriveTrain().left_back.setPower(gamepad1.left_trigger);
-                    robot.getDriveTrain().left_front.setPower(gamepad1.left_trigger);
-                    robot.getDriveTrain().right_back.setPower(-gamepad1.left_trigger);
-                    robot.getDriveTrain().right_front.setPower(-gamepad1.left_trigger);
+                /*double speedReduction = 0.5;
+                if (gamepad1.left_trigger ){
+                    robot.getDriveTrain().left_back.setPower(gamepad1.left_trigger    * speedReduction);
+                    robot.getDriveTrain().left_front.setPower(gamepad1.left_trigger   * speedReduction);
+                    robot.getDriveTrain().right_back.setPower(-gamepad1.left_trigger  * speedReduction);
+                    robot.getDriveTrain().right_front.setPower(-gamepad1.left_trigger * speedReduction);
                 }
                 if (gamepad1.right_trigger != 0){
-                    robot.getDriveTrain().left_back.setPower(-gamepad1.left_trigger);
-                    robot.getDriveTrain().left_front.setPower(-gamepad1.left_trigger);
-                    robot.getDriveTrain().right_back.setPower(gamepad1.left_trigger);
-                    robot.getDriveTrain().right_front.setPower(gamepad1.left_trigger);
-                }
+                    robot.getDriveTrain().left_back.setPower(-gamepad1.right_trigger  * speedReduction);
+                    robot.getDriveTrain().left_front.setPower(-gamepad1.right_trigger * speedReduction);
+                    robot.getDriveTrain().right_back.setPower(gamepad1.right_trigger  * speedReduction);
+                    robot.getDriveTrain().right_front.setPower(gamepad1.right_trigger * speedReduction);
+                }*/
+
                 if (gamepad1.a){
-                    robot.getRingControl().DriverControlledRingIntake(1.0);
+                    ringtogglespeed = 1.0;
                 }
-                else {
-                    robot.getRingControl().DriverControlledRingIntake(0.0);
+                else if (gamepad1.y){
+                    ringtogglespeed = -1.0;
                 }
+                else if (gamepad1.back){
+                    ringtogglespeed = 0.0;
+                }
+                robot.getRingControl().DriverControlledRingIntake(ringtogglespeed);
 
 
 
