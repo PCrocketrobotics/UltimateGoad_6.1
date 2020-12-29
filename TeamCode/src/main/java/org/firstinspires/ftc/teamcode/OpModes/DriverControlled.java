@@ -61,10 +61,10 @@ public class DriverControlled extends LinearOpMode {
 
             //Slow Motion Toggle
             boolean changed = false; //Outside of loop()
-            if(gamepad1.back && !changed) {
+            if(gamepad1.start && !changed) {
                 slowmo = !slowmo;
                 changed = true;
-            } else if(!gamepad1.back) changed = false;
+            } else if(!gamepad1.start) changed = false;
 
                 //Gamepad 1
                 /*if (gamepad1.b) {

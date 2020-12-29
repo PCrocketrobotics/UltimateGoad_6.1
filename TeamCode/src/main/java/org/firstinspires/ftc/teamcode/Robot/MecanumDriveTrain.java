@@ -79,7 +79,7 @@ public class MecanumDriveTrain {
         right_back.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
     }
-    public void DriverControlled_Drive(){
+    public void DriverControlled_Drive(double speedreduction){
         double y = robot.opMode.gamepad1.left_stick_y; // Driver Forward / Revers
         double x = robot.opMode.gamepad1.left_stick_x; // Strafe Control
         double rot = robot.opMode.gamepad1.right_stick_x; //Rotation Control
@@ -97,10 +97,10 @@ public class MecanumDriveTrain {
         power_right_front = y - x - rot;
         power_right_back = y + x - rot;
 
-        left_front.setPower(power_left_front);
-        left_back.setPower(power_left_back);
-        right_front.setPower(power_right_front);
-        right_back.setPower(power_right_back);
+        left_front.setPower(power_left_front   * speedreduction);
+        left_back.setPower(power_left_back     * speedreduction);
+        right_front.setPower(power_right_front * speedreduction);
+        right_back.setPower(power_right_back   * speedreduction);
 
         robot.opMode.telemetry.addLine("Front Wheel Power")
                 .addData("Left",  "%.3f", power_left_front)
@@ -156,7 +156,7 @@ public class MecanumDriveTrain {
         left_front.setPower(motor_power);
 
         if (targetColor == "blue"){
-            while (colorSensor.blue() < 250 && (colorSensor.red() > 150) && (colorSensor.alpha() < 600)) {
+            while (colorSensor.blue() < 3000 && (colorSensor.red() > 500) && (colorSensor.alpha() < 1600)) {
                 Color.RGBToHSV( colorSensor.red() * SCALE_FACTOR, colorSensor.green() * SCALE_FACTOR, colorSensor.blue() * SCALE_FACTOR, hsvValues);
                 robot.opMode.telemetry.addData("Red", colorSensor.red());
                 robot.opMode.telemetry.addData("Blue", colorSensor.blue());
@@ -166,7 +166,7 @@ public class MecanumDriveTrain {
             }
         }
         else if (targetColor == "red"){
-            while (colorSensor.red() < 400 && colorSensor.alpha() < 600) {
+            while (colorSensor.red() < 1500 && colorSensor.alpha() < 1200) {
                 Color.RGBToHSV( colorSensor.red() * SCALE_FACTOR, colorSensor.green() * SCALE_FACTOR, colorSensor.blue() * SCALE_FACTOR, hsvValues);
                 robot.opMode.telemetry.addData("Red", colorSensor.red());
                 robot.opMode.telemetry.addData("Blue", colorSensor.blue());
@@ -176,7 +176,7 @@ public class MecanumDriveTrain {
             }
         }
         else if (targetColor == "white"){
-            while (colorSensor.red() < 700 && colorSensor.blue() < 600 && colorSensor.green() < 750 && colorSensor.alpha() < 2000) {
+            while (colorSensor.red() < 5000 && colorSensor.blue() < 7500&& colorSensor.green() < 9000 && colorSensor.alpha() < 7000) {
                 Color.RGBToHSV( colorSensor.red() * SCALE_FACTOR, colorSensor.green() * SCALE_FACTOR, colorSensor.blue() * SCALE_FACTOR, hsvValues);
                 robot.opMode.telemetry.addData("Red", colorSensor.red());
                 robot.opMode.telemetry.addData("Blue", colorSensor.blue());

@@ -38,7 +38,7 @@ public class RingControl {
         bucketservo.setPosition(position);
     }
     public void ConstantRingShooter(){
-        double YEETFORCE = 0.4;
+        double YEETFORCE = 1.0; //0.4
         ringshooterleft.setPower(YEETFORCE);
         ringshooterright.setPower(-YEETFORCE);
     }
