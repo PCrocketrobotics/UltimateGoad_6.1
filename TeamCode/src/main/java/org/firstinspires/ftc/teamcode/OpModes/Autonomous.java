@@ -71,6 +71,20 @@ public class Autonomous extends LinearOpMode {
                 robot.getDriveTrain().moveToColor("red", .3);
                 //Insert code for arm when arm is installed back onto the robot.
             }
+            if (Target_Zone == 1) {
+                robot.getDriveTrain().moveToColor("white", .3);
+                robot.getDriveTrain().gyroDrive(14, -14, -14, 14, .3, 3);
+                robot.getDriveTrain().moveToColor("red", .3);
+                //Insert code for arm when arm is installed back onto the robot.
+            }
+            if (Target_Zone == 4) {
+                robot.getDriveTrain().moveToColor("white", .3);
+                robot.getDriveTrain().gyroDrive(2, 2, 2, 2, .3, 3);
+                robot.getDriveTrain().moveToColor("red", .3);
+                robot.getDriveTrain().gyroDrive(2, 2, 2, 2, .3, 3);
+                robot.getDriveTrain().moveToColor("red", .3);
+                //Insert code for arm when arm is installed back onto the robot.
+            }
 
 
         }

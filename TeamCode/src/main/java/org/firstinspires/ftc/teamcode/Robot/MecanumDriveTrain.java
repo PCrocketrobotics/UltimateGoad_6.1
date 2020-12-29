@@ -244,8 +244,8 @@ public class MecanumDriveTrain {
         imuTurnGlobal(robot.imuControl.readimuheading() + providedangle, eBrake);
     }
 
-    public void gyroDrive ( double left_front_power,  double left_back_power,
-                            double right_front_power, double right_back_power,
+    public void gyroDrive ( double left_front_distance,  double left_back_distance,
+                            double right_front_distance, double right_back_distance,
                             double motor_power,
                             double angle) {
 
@@ -268,10 +268,10 @@ public class MecanumDriveTrain {
         // Ensure that the opmode is still active
 
             // Determine new target position, and pass to motor controller
-            left_front_counts      = (int)(left_front_power  * COUNTS_PER_INCH_DOUBLE);
-            left_back_counts       = (int)(left_back_power   * COUNTS_PER_INCH_DOUBLE);
-            right_back_counts      = (int)(right_back_power  * COUNTS_PER_INCH_DOUBLE);
-            right_front_counts     = (int)(right_front_power * COUNTS_PER_INCH_DOUBLE);
+            left_front_counts      = (int)(left_front_distance  * COUNTS_PER_INCH_DOUBLE);
+            left_back_counts       = (int)(left_back_distance   * COUNTS_PER_INCH_DOUBLE);
+            right_back_counts      = (int)(right_back_distance  * COUNTS_PER_INCH_DOUBLE);
+            right_front_counts     = (int)(right_front_distance * COUNTS_PER_INCH_DOUBLE);
             new_left_front_target  = left_front.getCurrentPosition()  + left_front_counts;
             new_right_front_target = right_front.getCurrentPosition() + right_front_counts;
             new_left_back_target   = left_back.getCurrentPosition()   + left_back_counts;
