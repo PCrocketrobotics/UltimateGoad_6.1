@@ -6,6 +6,10 @@ org/firstinspires/ftc/teamcode/Robot/Robot.java
  org.firstinspires.ftc.teamcode.Robot.Robot
 org/firstinspires/ftc/teamcode/Robot/MecanumDriveTrain.java
  org.firstinspires.ftc.teamcode.Robot.MecanumDriveTrain
+org/firstinspires/ftc/teamcode/OpModes/ColorSensor.java
+ org.firstinspires.ftc.teamcode.OpModes.ColorSensor
+ org.firstinspires.ftc.teamcode.OpModes.ColorSensor$1
+ org.firstinspires.ftc.teamcode.OpModes.ColorSensor$2
 org/firstinspires/ftc/teamcode/Robot/ComputerVision.java
  org.firstinspires.ftc.teamcode.Robot.ComputerVision
 org/firstinspires/ftc/teamcode/BuildConfig.java

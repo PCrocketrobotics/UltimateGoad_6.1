@@ -27,6 +27,7 @@ public class DriverControlled extends LinearOpMode {
     boolean slowmo;
     double speedreduction;
     double ringtogglespeed;
+    double ringshooterspeed;
 
     @Override
     public void runOpMode() {
@@ -57,6 +58,8 @@ public class DriverControlled extends LinearOpMode {
 
             //robot.getImuControl().readimuheading();
 
+
+            //Slow Motion Toggle
             boolean changed = false; //Outside of loop()
             if(gamepad1.back && !changed) {
                 slowmo = !slowmo;
@@ -87,6 +90,7 @@ public class DriverControlled extends LinearOpMode {
                     robot.getDriveTrain().right_front.setPower(gamepad1.right_trigger * speedReduction);
                 }*/
 
+                //Ring Intake Controls
                 if (gamepad1.a){
                     ringtogglespeed = 1.0;
                 }
@@ -98,6 +102,8 @@ public class DriverControlled extends LinearOpMode {
                 }
                 robot.getRingControl().DriverControlledRingIntake(ringtogglespeed);
 
+                //Bucket Servo Controls TEMP*******************
+
 
 
                 //Gamepad 2
@@ -107,14 +113,19 @@ public class DriverControlled extends LinearOpMode {
                 else{
                     robot.getWobbleGripper().setWobbleGripper(0.0);
                 }
+
+                if (gamepad2.x) {
+                    robot.getRingControl().ConstantRingShooter();
+                }
+
                 if (gamepad2.left_stick_y != 0) {
                     robot.getWobbleGripper().setArmPower(gamepad2.left_stick_y);
                 }
 
-                robot.getRingControl().ConstantRingShooter();
                 if (gamepad2.right_trigger != 0){
-                    robot.getRingControl().DriverControlledRingShooter();
+                    robot.getRingControl().DriverControlledRingShooter(0.0);
                 }
+                else robot.getRingControl().DriverControlledRingShooter(0.4);
 
                 telemetry.update();
                 telemetry.clearAll();
