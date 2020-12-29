@@ -4,6 +4,7 @@ import android.graphics.Color;
 
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 //import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareDevice;
@@ -48,6 +49,10 @@ public class MecanumDriveTrain {
         left_back   = robot.opMode.hardwareMap.get(DcMotorEx.class, "left_back");
         right_front = robot.opMode.hardwareMap.get(DcMotorEx.class, "right_front");
         right_back  = robot.opMode.hardwareMap.get(DcMotorEx.class, "right_back");
+
+        colorSensor = robot.opMode.hardwareMap.get(RevColorSensorV3.class, "colorSensor");
+
+
 
        // Set Direction of Each Drive Motor to keep Speeds identical between all motors.
         left_front.setDirection(DcMotorEx.Direction.FORWARD);
