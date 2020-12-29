@@ -6,6 +6,8 @@ import android.graphics.Color;
 
 import org.firstinspires.ftc.teamcode.Robot.Robot;
 
+import java.lang.annotation.Target;
+
 
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Autonomous", group="Production")
 
@@ -21,6 +23,7 @@ public class Autonomous extends LinearOpMode {
         String ringpattern = "";
         robot.getDriveTrain().init();
         robot.getComputerVision().init();
+        robot.getImuControl().init();
         sleep(500);
         
         ElapsedTime timer = new ElapsedTime();
@@ -54,9 +57,7 @@ public class Autonomous extends LinearOpMode {
                 telemetry.update();
                 sleep(1800);
                 if (Target_Zone == 0) {
-                    robot.getDriveTrain().moveToColor("red", .6);
-
-                    
+                    break;
                 }
                 else if (Target_Zone == 1) {
                     break;
@@ -66,8 +67,10 @@ public class Autonomous extends LinearOpMode {
                 }
 
             }
-            robot.getDriveTrain().gyroDrive(1000, 1000, 1000, 1000, .25, 1);
-
+            if (Target_Zone == 0) {
+                robot.getDriveTrain().moveToColor("red", .3);
+                //Insert code for arm when arm is installed back onto the robot.
+            }
 
 
         }

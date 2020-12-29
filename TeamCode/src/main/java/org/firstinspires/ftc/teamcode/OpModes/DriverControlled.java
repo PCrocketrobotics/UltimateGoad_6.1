@@ -24,8 +24,8 @@ public class DriverControlled extends LinearOpMode {
 
     /* Declare OpMode members. */
     Robot robot  = new Robot(this);
-    boolean toggle_a;
-    boolean toggle_y;
+    boolean slowmo;
+    double speedreduction;
     double ringtogglespeed;
 
     @Override
@@ -51,20 +51,29 @@ public class DriverControlled extends LinearOpMode {
         //PROGRAM STARTS HERE -----------------------------------------------------------------------------------------------
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-                robot.getDriveTrain().DriverControlled_Drive();
-                //robot.getImuControl().readimuheading();
+            robot.getDriveTrain().DriverControlled_Drive();
+            if (slowmo == true) speedreduction = 0.5;
+            else speedreduction = 1.0;
+
+            //robot.getImuControl().readimuheading();
+
+            boolean changed = false; //Outside of loop()
+            if(gamepad1.back && !changed) {
+                slowmo = !slowmo;
+                changed = true;
+            } else if(!gamepad1.back) changed = false;
 
                 //Gamepad 1
-                if (gamepad1.b) {
+                /*if (gamepad1.b) {
                     robot.getDriveTrain().imuTurnLocal(-90);
                 }
                 if (gamepad1.x){
                     robot.getDriveTrain().imuTurnLocal(90);
                 }
                 if (gamepad1.start){
-                    robot.getDriveTrain().imuTurnGlobal(0);
+                    robot.getDriveTrain().imuTurnGlobal(0, );
                 }
-                /*double speedReduction = 0.5;
+                double speedReduction = 0.5;
                 if (gamepad1.left_trigger ){
                     robot.getDriveTrain().left_back.setPower(gamepad1.left_trigger    * speedReduction);
                     robot.getDriveTrain().left_front.setPower(gamepad1.left_trigger   * speedReduction);

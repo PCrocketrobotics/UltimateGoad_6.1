@@ -59,7 +59,8 @@ public class ComputerVision {
         if (tfod != null) {
            tfod.activate();
         }
-       tfod.setZoom(2, 1.78);
+        double aspect = 4/3; //length divided by height
+       tfod.setZoom(2, aspect);
     }
 
     public String detect() {

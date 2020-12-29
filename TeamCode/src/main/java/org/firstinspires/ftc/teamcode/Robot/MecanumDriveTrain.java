@@ -188,7 +188,7 @@ public class MecanumDriveTrain {
         right_front.setPower(0);
         right_back.setPower(0);
     }
-    public void imuTurnGlobal(double targetangle){
+    public void imuTurnGlobal(double targetangle, boolean eBrake){
         //Assumes Heading of 0 at initilization and orientation is placed by the team.
         double errorangle = 1;
         double minerror=0;
@@ -205,7 +205,7 @@ public class MecanumDriveTrain {
 
         totalarc = targetangle - currentangle;
 
-        while (currentangle > maxerror || currentangle < minerror){
+        while ((currentangle > maxerror || currentangle < minerror) && !eBrake){
             if (((targetangle - currentangle) / totalarc) < .7) {
                 throttle = 0.5;
             }
@@ -240,8 +240,8 @@ public class MecanumDriveTrain {
         robot.opMode.telemetry.clearAll();
     }
 
-    public void imuTurnLocal(double providedangle){
-        imuTurnGlobal(robot.imuControl.readimuheading() + providedangle);
+    public void imuTurnLocal(double providedangle, boolean eBrake){
+        imuTurnGlobal(robot.imuControl.readimuheading() + providedangle, eBrake);
     }
 
     public void gyroDrive ( double left_front_power,  double left_back_power,
@@ -326,9 +326,9 @@ public class MecanumDriveTrain {
 
                 // Display drive status for the driver.
                 robot.opMode.telemetry.addData("Err/St",  "%5.1f/%5.1f",  error, steer);
-                robot.opMode.telemetry.addData("Target",  "%7d:%7d",      new_left_front_target,  new_right_front_target, new_left_back_target, new_right_back_target);
-                robot.opMode.telemetry.addData("Actual",  "%7d:%7d",      left_front.getCurrentPosition(), right_front.getCurrentPosition(), left_back.getCurrentPosition(), right_back.getCurrentPosition());
-                robot.opMode.telemetry.addData("Speed",   "%5.2f:%5.2f",  left_front_speed, right_front_speed, left_back_speed, right_back_speed);
+                robot.opMode.telemetry.addData("Target",  "%7d:%7d:%7d:%7d",      new_left_front_target,  new_right_front_target, new_left_back_target, new_right_back_target);
+                robot.opMode.telemetry.addData("Actual",  "%7d:%7d:%7d:%7d",      left_front.getCurrentPosition(), right_front.getCurrentPosition(), left_back.getCurrentPosition(), right_back.getCurrentPosition());
+                robot.opMode.telemetry.addData("Speed",   "%5.2f:%5.2f:%5.2f:%5.2f",  left_front_speed, right_front_speed, left_back_speed, right_back_speed);
                 robot.opMode.telemetry.update();
             }
 
