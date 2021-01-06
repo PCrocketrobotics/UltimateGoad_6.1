@@ -52,7 +52,7 @@ public class DriverControlled extends LinearOpMode {
         //PROGRAM STARTS HERE -----------------------------------------------------------------------------------------------
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            robot.getDriveTrain().DriverControlled_Drive();
+            robot.getDriveTrain().DriverControlled_Drive(1);
             if (slowmo == true) speedreduction = 0.5;
             else speedreduction = 1.0;
 

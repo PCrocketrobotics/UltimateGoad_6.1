@@ -5,6 +5,7 @@ import android.graphics.Color;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 //import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareDevice;
@@ -29,6 +30,7 @@ public class MecanumDriveTrain {
     float hsvValues[]      = {0F, 0F, 0F};
     final float values[]   = hsvValues;
     final int SCALE_FACTOR = 255;
+    double colorSum;
 
     public DcMotorEx left_front;
     public DcMotorEx left_back;
@@ -145,43 +147,61 @@ public class MecanumDriveTrain {
     public void moveToColor(String targetColor, double motor_power){
         Color.RGBToHSV(colorSensor.red() * SCALE_FACTOR, colorSensor.green() * SCALE_FACTOR, colorSensor.blue() * SCALE_FACTOR, hsvValues);
 
-        left_back.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
-        right_back.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
-        left_front.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
-        right_front.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        left_back.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        right_back.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        left_front.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        right_front.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         Color.RGBToHSV(colorSensor.red() * SCALE_FACTOR, colorSensor.green() * SCALE_FACTOR, colorSensor.blue() * SCALE_FACTOR, hsvValues);
-        right_back.setPower(motor_power);
+
+        colorSum = ((colorSensor.red()) + (colorSensor.blue()) + (colorSensor.green()) + (colorSensor.alpha()));
         left_back.setPower(motor_power);
-        right_front.setPower(motor_power);
+        right_back.setPower(motor_power);
         left_front.setPower(motor_power);
+        right_front.setPower(motor_power);
 
         if (targetColor == "blue"){
-            while (colorSensor.blue() < 3000 && (colorSensor.red() > 500) && (colorSensor.alpha() < 1600)) {
-                Color.RGBToHSV( colorSensor.red() * SCALE_FACTOR, colorSensor.green() * SCALE_FACTOR, colorSensor.blue() * SCALE_FACTOR, hsvValues);
+            while (colorSensor.blue() < 2000 && colorSensor.red() > 800) {
+                Color.RGBToHSV(colorSensor.red(), colorSensor.green(), colorSensor.blue(), hsvValues);
                 robot.opMode.telemetry.addData("Red", colorSensor.red());
                 robot.opMode.telemetry.addData("Blue", colorSensor.blue());
                 robot.opMode.telemetry.addData("Green", colorSensor.green());
                 robot.opMode.telemetry.addData("Clear", colorSensor.alpha());
+                robot.opMode.telemetry.addData("colorSum", colorSum);
+                //robot.opMode.telemetry.addData("Hue %7f %7f %7f", hsvValues[0], hsvValues[1], hsvValues[2]);
                 robot.opMode.telemetry.update();
             }
         }
         else if (targetColor == "red"){
-            while (colorSensor.red() < 1500 && colorSensor.alpha() < 1200) {
-                Color.RGBToHSV( colorSensor.red() * SCALE_FACTOR, colorSensor.green() * SCALE_FACTOR, colorSensor.blue() * SCALE_FACTOR, hsvValues);
+            while (colorSensor.red() < 1500 && colorSensor.blue() > 1100) {
+                Color.RGBToHSV(colorSensor.red(), colorSensor.green(), colorSensor.blue(), hsvValues);
                 robot.opMode.telemetry.addData("Red", colorSensor.red());
                 robot.opMode.telemetry.addData("Blue", colorSensor.blue());
                 robot.opMode.telemetry.addData("Green", colorSensor.green());
                 robot.opMode.telemetry.addData("Clear", colorSensor.alpha());
+                robot.opMode.telemetry.addData("hsv", hsvValues);
                 robot.opMode.telemetry.update();
             }
         }
         else if (targetColor == "white"){
-            while (colorSensor.red() < 5000 && colorSensor.blue() < 7500&& colorSensor.green() < 9000 && colorSensor.alpha() < 7000) {
-                Color.RGBToHSV( colorSensor.red() * SCALE_FACTOR, colorSensor.green() * SCALE_FACTOR, colorSensor.blue() * SCALE_FACTOR, hsvValues);
+            while (colorSum < 15000) {
+                Color.RGBToHSV(colorSensor.red(), colorSensor.green(), colorSensor.blue(), hsvValues);
+                colorSum = ((colorSensor.red()) + (colorSensor.blue()) + (colorSensor.green()) + (colorSensor.alpha()));
                 robot.opMode.telemetry.addData("Red", colorSensor.red());
                 robot.opMode.telemetry.addData("Blue", colorSensor.blue());
                 robot.opMode.telemetry.addData("Green", colorSensor.green());
                 robot.opMode.telemetry.addData("Clear", colorSensor.alpha());
+                robot.opMode.telemetry.addData("hsv", hsvValues.toString());
+                robot.opMode.telemetry.update();
+            }
+        }
+        else if (targetColor == "infinite"){
+            while (colorSum < 50000) {
+                Color.RGBToHSV(colorSensor.red(), colorSensor.green(), colorSensor.blue(), hsvValues);
+                robot.opMode.telemetry.addData("Red", colorSensor.red());
+                robot.opMode.telemetry.addData("Blue", colorSensor.blue());
+                robot.opMode.telemetry.addData("Green", colorSensor.green());
+                robot.opMode.telemetry.addData("Clear", colorSensor.alpha());
+                robot.opMode.telemetry.addData("hsv", hsvValues);
                 robot.opMode.telemetry.update();
             }
         }
