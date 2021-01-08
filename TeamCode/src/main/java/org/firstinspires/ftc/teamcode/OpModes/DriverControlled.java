@@ -66,30 +66,6 @@ public class DriverControlled extends LinearOpMode {
                 changed = true;
             } else if(!gamepad1.start) changed = false;
 
-                //Gamepad 1
-                /*if (gamepad1.b) {
-                    robot.getDriveTrain().imuTurnLocal(-90);
-                }
-                if (gamepad1.x){
-                    robot.getDriveTrain().imuTurnLocal(90);
-                }
-                if (gamepad1.start){
-                    robot.getDriveTrain().imuTurnGlobal(0, );
-                }
-                double speedReduction = 0.5;
-                if (gamepad1.left_trigger ){
-                    robot.getDriveTrain().left_back.setPower(gamepad1.left_trigger    * speedReduction);
-                    robot.getDriveTrain().left_front.setPower(gamepad1.left_trigger   * speedReduction);
-                    robot.getDriveTrain().right_back.setPower(-gamepad1.left_trigger  * speedReduction);
-                    robot.getDriveTrain().right_front.setPower(-gamepad1.left_trigger * speedReduction);
-                }
-                if (gamepad1.right_trigger != 0){
-                    robot.getDriveTrain().left_back.setPower(-gamepad1.right_trigger  * speedReduction);
-                    robot.getDriveTrain().left_front.setPower(-gamepad1.right_trigger * speedReduction);
-                    robot.getDriveTrain().right_back.setPower(gamepad1.right_trigger  * speedReduction);
-                    robot.getDriveTrain().right_front.setPower(gamepad1.right_trigger * speedReduction);
-                }*/
-
                 //Ring Intake Controls
                 if (gamepad1.a){
                     ringtogglespeed = 1.0;
@@ -107,6 +83,7 @@ public class DriverControlled extends LinearOpMode {
 
 
                 //Gamepad 2
+                //Toggle gripper servo to grab or drop the wobble goal
                 if (gamepad2.a){
                     robot.getWobbleGripper().setWobbleGripper(0.5);
                 }
@@ -114,14 +91,17 @@ public class DriverControlled extends LinearOpMode {
                     robot.getWobbleGripper().setWobbleGripper(0.0);
                 }
 
+                //Toggles the motor to pick up rings
                 if (gamepad2.x) {
                     robot.getRingControl().ConstantRingShooter();
                 }
 
+                //Move the wobble goal arm
                 if (gamepad2.left_stick_y != 0) {
                     robot.getWobbleGripper().setArmPower(gamepad2.left_stick_y);
                 }
 
+                //Activates the servo to push the ring into the shooter
                 if (gamepad2.right_trigger != 0){
                     robot.getRingControl().DriverControlledRingShooter(0.0);
                 }

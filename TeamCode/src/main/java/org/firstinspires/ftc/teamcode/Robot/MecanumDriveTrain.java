@@ -3,33 +3,20 @@ package org.firstinspires.ftc.teamcode.Robot;
 import android.graphics.Color;
 
 import com.qualcomm.hardware.rev.RevColorSensorV3;
-//import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.ColorSensor;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.HardwareDevice;
-import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
-
-import org.firstinspires.ftc.teamcode.R;
-
-import java.util.List;
-import java.util.Locale;
 
 public class MecanumDriveTrain {
     static final int            COUNTS_PER_MOTOR_REV   = 28;      // Motor with 1:1 gear ratio
     static final double         DRIVE_GEAR_REDUCTION   = 10.5;    // Rev Ultraplanetary Motor 12:1 but actual is 10.5:1
     static final double         WHEEL_DIAMETER_INCHES  = 3.0;     // For figuring circumference
     static final double         COUNTS_PER_INCH_DOUBLE = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.1415);
-    //imu variable.
     private static final double HEADING_THRESHOLD      = 1;
     static final double         P_TURN_COEFF           = 0.1;
     static final double         P_DRIVE_COEFF          = 0.15; //Originally 0.15
 
     float hsvValues[]      = {0F, 0F, 0F};
     final float values[]   = hsvValues;
-    final int SCALE_FACTOR = 255;
     double colorSum;
 
     public DcMotorEx left_front;
@@ -145,13 +132,13 @@ public class MecanumDriveTrain {
         }
     }
     public void moveToColor(String targetColor, double motor_power){
-        Color.RGBToHSV(colorSensor.red() * SCALE_FACTOR, colorSensor.green() * SCALE_FACTOR, colorSensor.blue() * SCALE_FACTOR, hsvValues);
+        //Color.RGBToHSV(colorSensor.red(), colorSensor.green(), colorSensor.blue(), hsvValues);
 
         left_back.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         right_back.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         left_front.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         right_front.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        Color.RGBToHSV(colorSensor.red() * SCALE_FACTOR, colorSensor.green() * SCALE_FACTOR, colorSensor.blue() * SCALE_FACTOR, hsvValues);
+        //Color.RGBToHSV(colorSensor.red(), colorSensor.green(), colorSensor.blue(), hsvValues);
 
         colorSum = ((colorSensor.red()) + (colorSensor.blue()) + (colorSensor.green()) + (colorSensor.alpha()));
         left_back.setPower(motor_power);
@@ -159,20 +146,26 @@ public class MecanumDriveTrain {
         left_front.setPower(motor_power);
         right_front.setPower(motor_power);
 
+        float cRed;
+        float cBlue;
+        float cGreen;
+        float cClear;
+
+
+
         if (targetColor == "blue"){
-            while (colorSensor.blue() < 2000 && colorSensor.red() > 800) {
+            while (colorSensor.blue() < 2000 && colorSensor.red() > 700) {
                 Color.RGBToHSV(colorSensor.red(), colorSensor.green(), colorSensor.blue(), hsvValues);
                 robot.opMode.telemetry.addData("Red", colorSensor.red());
                 robot.opMode.telemetry.addData("Blue", colorSensor.blue());
                 robot.opMode.telemetry.addData("Green", colorSensor.green());
                 robot.opMode.telemetry.addData("Clear", colorSensor.alpha());
                 robot.opMode.telemetry.addData("colorSum", colorSum);
-                //robot.opMode.telemetry.addData("Hue %7f %7f %7f", hsvValues[0], hsvValues[1], hsvValues[2]);
                 robot.opMode.telemetry.update();
             }
         }
         else if (targetColor == "red"){
-            while (colorSensor.red() < 1500 && colorSensor.blue() > 1100) {
+            while (colorSensor.red() < 1500 && colorSensor.blue() > 950) {
                 Color.RGBToHSV(colorSensor.red(), colorSensor.green(), colorSensor.blue(), hsvValues);
                 robot.opMode.telemetry.addData("Red", colorSensor.red());
                 robot.opMode.telemetry.addData("Blue", colorSensor.blue());
@@ -197,11 +190,17 @@ public class MecanumDriveTrain {
         else if (targetColor == "infinite"){
             while (colorSum < 50000) {
                 Color.RGBToHSV(colorSensor.red(), colorSensor.green(), colorSensor.blue(), hsvValues);
-                robot.opMode.telemetry.addData("Red", colorSensor.red());
-                robot.opMode.telemetry.addData("Blue", colorSensor.blue());
-                robot.opMode.telemetry.addData("Green", colorSensor.green());
-                robot.opMode.telemetry.addData("Clear", colorSensor.alpha());
-                robot.opMode.telemetry.addData("hsv", hsvValues);
+                cRed  = colorSensor.getNormalizedColors().red;
+                cBlue = colorSensor.getNormalizedColors().blue;
+                cGreen = colorSensor.getNormalizedColors().green;
+                cClear = colorSensor.getNormalizedColors().alpha;
+                robot.opMode.telemetry.addData("Red",        cRed);
+                robot.opMode.telemetry.addData("Blue",       cBlue);
+                robot.opMode.telemetry.addData("Green",      cGreen);
+                robot.opMode.telemetry.addData("Clear",      cClear);
+                robot.opMode.telemetry.addData("Hue",        hsvValues[0]);
+                robot.opMode.telemetry.addData("Saturation", hsvValues[1]);
+                robot.opMode.telemetry.addData("Value",      hsvValues[2]);
                 robot.opMode.telemetry.update();
             }
         }

@@ -68,7 +68,7 @@ public class Autonomous extends LinearOpMode {
 
             }
             if (Target_Zone == 0) {
-                robot.getDriveTrain().moveToColor("blue", 0);
+                robot.getDriveTrain().moveToColor("infinite", 0);
                 //robot.getDriveTrain().gyroDrive(72, 72, 72, 72, .35, 1);
                 //Insert code for arm when arm is installed back onto the robot.
             }
