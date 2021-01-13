@@ -27,6 +27,8 @@ public class RingControl {
         ringintake.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
         ringintake.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         ringintake.setPower(0);
+
+        bucketservo.setPosition(.4);
     }
     public void DriverControlledRingIntake(double ringpower){
         ringintake.setPower(ringpower);
@@ -37,8 +39,8 @@ public class RingControl {
 
         bucketservo.setPosition(position);
     }
-    public void ConstantRingShooter(){
-        double YEETFORCE = 1.0; //0.4
+    public void ConstantRingShooter(double YEETFORCE){
+
         ringshooterleft.setPower(YEETFORCE);
         ringshooterright.setPower(-YEETFORCE);
     }

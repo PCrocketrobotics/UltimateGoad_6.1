@@ -23,11 +23,14 @@ import org.firstinspires.ftc.teamcode.Robot.*;
 public class DriverControlled extends LinearOpMode {
 
     /* Declare OpMode members. */
-    Robot robot  = new Robot(this);
-    boolean slowmo;
-    double speedreduction;
-    double ringtogglespeed;
-    double ringshooterspeed;
+    Robot robot      = new Robot(this);
+    boolean slowmo   = false;
+    boolean changed  = false; //Outside of loop()
+    boolean shooting = false;
+    boolean changed2 = false; //Outside of loop()
+    double  speedreduction;
+    double  ringtogglespeed;
+    double  ringshooterspeed;
 
     @Override
     public void runOpMode() {
@@ -49,10 +52,12 @@ public class DriverControlled extends LinearOpMode {
         waitForStart();
         // clear telemetry to clean up screen
         telemetry.clearAll();
+
+
         //PROGRAM STARTS HERE -----------------------------------------------------------------------------------------------
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            robot.getDriveTrain().DriverControlled_Drive(1);
+            robot.getDriveTrain().DriverControlled_Drive(speedreduction);
             if (slowmo == true) speedreduction = 0.5;
             else speedreduction = 1.0;
 
@@ -60,7 +65,7 @@ public class DriverControlled extends LinearOpMode {
 
 
             //Slow Motion Toggle
-            boolean changed = false; //Outside of loop()
+
             if(gamepad1.start && !changed) {
                 slowmo = !slowmo;
                 changed = true;
@@ -92,8 +97,16 @@ public class DriverControlled extends LinearOpMode {
                 }
 
                 //Toggles the motor to pick up rings
-                if (gamepad2.x) {
-                    robot.getRingControl().ConstantRingShooter();
+                if(gamepad1.x && !changed2) {
+                    shooting = !shooting;
+                    changed2 = true;
+                } else if(!gamepad1.x) changed2 = false;
+
+                if (shooting) {
+                    robot.getRingControl().ConstantRingShooter(0.4);
+                }
+                else{
+                    robot.getRingControl().ConstantRingShooter(0.0);
                 }
 
                 //Move the wobble goal arm
@@ -103,9 +116,9 @@ public class DriverControlled extends LinearOpMode {
 
                 //Activates the servo to push the ring into the shooter
                 if (gamepad2.right_trigger != 0){
-                    robot.getRingControl().DriverControlledRingShooter(0.0);
+                    robot.getRingControl().DriverControlledRingShooter(0.2);
                 }
-                else robot.getRingControl().DriverControlledRingShooter(0.4);
+                else robot.getRingControl().DriverControlledRingShooter(0.45);
 
                 telemetry.update();
                 telemetry.clearAll();

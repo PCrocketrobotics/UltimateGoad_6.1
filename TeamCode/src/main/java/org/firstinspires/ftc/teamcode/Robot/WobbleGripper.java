@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.Robot;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
-
 public class WobbleGripper {
     static final double MAX_POS     = 1.0;
     static final double MIN_POS     = 0.0;

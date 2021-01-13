@@ -14,6 +14,7 @@ import java.lang.annotation.Target;
 public class Autonomous extends LinearOpMode {
     Robot robot = new Robot (this);
     int Target_Zone;
+    boolean run;
 
     private boolean inInitializationState() {
         return (!opModeIsActive() && !isStopRequested());
@@ -68,8 +69,13 @@ public class Autonomous extends LinearOpMode {
 
             }
             if (Target_Zone == 0) {
-                robot.getDriveTrain().moveToColor("infinite", 0);
-                //robot.getDriveTrain().gyroDrive(72, 72, 72, 72, .35, 1);
+                robot.getDriveTrain().moveToColor("red", .1);
+                sleep(5000);
+                //MIDDLE OF AUTO
+
+                //robot.getRingControl().ConstantRingShooter(0.2);
+
+
                 //Insert code for arm when arm is installed back onto the robot.
             }
             if (Target_Zone == 1) {
