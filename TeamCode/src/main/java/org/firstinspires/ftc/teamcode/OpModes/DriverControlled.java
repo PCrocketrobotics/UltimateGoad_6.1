@@ -85,7 +85,7 @@ public class DriverControlled extends LinearOpMode {
 
                 //Bucket Servo Controls TEMP*******************
 
-
+                double YEETFORCE_SET = 0.9;
 
                 //Gamepad 2
                 //Toggle gripper servo to grab or drop the wobble goal
@@ -97,17 +97,23 @@ public class DriverControlled extends LinearOpMode {
                 }
 
                 //Toggles the motor to pick up rings
-                if(gamepad1.x && !changed2) {
+                if(gamepad2.x && !changed2) {
                     shooting = !shooting;
                     changed2 = true;
-                } else if(!gamepad1.x) changed2 = false;
+                } else if(!gamepad2.x) changed2 = false;
 
                 if (shooting) {
-                    robot.getRingControl().ConstantRingShooter(0.4);
+                    robot.getRingControl().ConstantRingShooter(YEETFORCE_SET);
                 }
-                else{
-                    robot.getRingControl().ConstantRingShooter(0.0);
+                else {
+                    robot.getRingControl().ConstantRingShooter(0);
                 }
+            if (gamepad2.left_trigger != 0){
+                robot.getRingControl().ConstantRingShooter(0.7);
+            }
+            else if (gamepad2.left_trigger == 0 && shooting) {
+                robot.getRingControl().ConstantRingShooter(YEETFORCE_SET);
+            }
 
                 //Move the wobble goal arm
                 if (gamepad2.left_stick_y != 0) {

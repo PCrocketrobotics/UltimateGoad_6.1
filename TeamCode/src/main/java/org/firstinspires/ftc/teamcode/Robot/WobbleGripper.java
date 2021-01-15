@@ -21,9 +21,14 @@ public class WobbleGripper {
         wobbleservo.setPosition(0);
     }
 
-    public  void  setArmPower(double wobblepower){
+    public  void  setArmPower(double wobblepower) {
         wobblearmmotor.setPower(wobblepower);
     };
+
+    public void autonomousArmMovement(double wobblepower, int wobbledistance) {
+        wobblearmmotor.setPower(wobblepower);
+        wobblearmmotor.setTargetPosition(wobbledistance);
+    }
 
     public void setWobbleGripper(double wobbleposition){
 
@@ -34,4 +39,6 @@ public class WobbleGripper {
         }
 
     }
+
+
 }

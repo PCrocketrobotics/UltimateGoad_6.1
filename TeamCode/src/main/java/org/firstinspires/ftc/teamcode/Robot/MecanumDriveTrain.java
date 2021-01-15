@@ -156,10 +156,6 @@ public class MecanumDriveTrain {
         if (targetColor == "blue"){
             while (hsvValues[0] < 180) {
                 Color.RGBToHSV(colorSensor.red(), colorSensor.green(), colorSensor.blue(), hsvValues);
-                robot.opMode.telemetry.addData("Red", colorSensor.red());
-                robot.opMode.telemetry.addData("Blue", colorSensor.blue());
-                robot.opMode.telemetry.addData("Green", colorSensor.green());
-                robot.opMode.telemetry.addData("Clear", colorSensor.alpha());
                 robot.opMode.telemetry.addData("Hue", hsvValues[0]);
                 robot.opMode.telemetry.update();
             }
@@ -167,25 +163,14 @@ public class MecanumDriveTrain {
         else if (targetColor == "red"){
             while (hsvValues[0] >  80) {
                 Color.RGBToHSV(colorSensor.red(), colorSensor.green(), colorSensor.blue(), hsvValues);
-                robot.opMode.telemetry.addData("Red", colorSensor.red());
-                robot.opMode.telemetry.addData("Blue", colorSensor.blue());
-                robot.opMode.telemetry.addData("Green", colorSensor.green());
-                robot.opMode.telemetry.addData("Clear", colorSensor.alpha());
                 robot.opMode.telemetry.addData("Hue", hsvValues[0]);
                 robot.opMode.telemetry.update();
             }
-            robot.opMode.telemetry.addData("Loop ended with sensor at:",hsvValues[0]);
-            robot.opMode.telemetry.update();
         }
 
         else if (targetColor == "white"){
             while (hsvValues[2] < 20) {
                 Color.RGBToHSV(colorSensor.red(), colorSensor.green(), colorSensor.blue(), hsvValues);
-                colorSum = ((colorSensor.red()) + (colorSensor.blue()) + (colorSensor.green()) + (colorSensor.alpha()));
-                robot.opMode.telemetry.addData("Red", colorSensor.red());
-                robot.opMode.telemetry.addData("Blue", colorSensor.blue());
-                robot.opMode.telemetry.addData("Green", colorSensor.green());
-                robot.opMode.telemetry.addData("Clear", colorSensor.alpha());
                 robot.opMode.telemetry.addData("Value", hsvValues[2]);
                 robot.opMode.telemetry.update();
             }
