@@ -2,16 +2,13 @@ package org.firstinspires.ftc.teamcode.OpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import android.graphics.Color;
 
 import org.firstinspires.ftc.teamcode.Robot.Robot;
 
-import java.lang.annotation.Target;
 
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Autonomous Blue", group="Production")
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Autonomous", group="Production")
-
-public class Autonomous extends LinearOpMode {
+public class Autonomous_Blue extends LinearOpMode {
     Robot robot = new Robot (this);
     int Target_Zone;
     boolean run;
@@ -69,7 +66,7 @@ public class Autonomous extends LinearOpMode {
             }
             robot.getRingControl().DriverControlledRingShooter(.45);
             if (Target_Zone == 0) {
-                robot.getDriveTrain().moveToColor("red", .2);
+                robot.getDriveTrain().moveToColor("blue", .2);
                 //robot.getDriveTrain().gyroDrive(); Move forward a bit.
                 //robot.getDriveTrain().gyroDrive(); Strafe to the left.
                 //robot.getWobbleGripper().autonomousArmMovement(); Move wobble goal into position.
@@ -88,6 +85,7 @@ public class Autonomous extends LinearOpMode {
                 //robot.getRingControl().DriverControlledRingShooter(.45);
                 //robot.getDriveTrain().moveToColor("white", .3); Move back to white
                 //robot.getRingControl().ConstantRingShooter(0); Set speed of motors to 0.
+                //robot.getWobbleGripper().setWobbleGripper(); Move wobble gripper back to original position.
 
             }
             if (Target_Zone == 1) {
@@ -115,10 +113,9 @@ public class Autonomous extends LinearOpMode {
             }
             if (Target_Zone == 4) {
                 robot.getDriveTrain().moveToColor("white", .2);
+                robot.getDriveTrain().moveToColor("blue", .2);
                 robot.getDriveTrain().gyroDrive(3, 3, 3, 3, .2, 1);
-                robot.getDriveTrain().moveToColor("red", .2);
-                robot.getDriveTrain().gyroDrive(3, 3, 3, 3, .2, 1);
-                robot.getDriveTrain().moveToColor("red", .2);
+                robot.getDriveTrain().moveToColor("blue", .2);
                 //robot.getDriveTrain().gyroDrive(); Move forward a bit.
                 //robot.getDriveTrain().gyroDrive(); Strafe to the left.
                 //robot.getWobbleGripper().autonomousArmMovement(); Move wobble goal into position.

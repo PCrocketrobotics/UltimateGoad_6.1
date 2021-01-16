@@ -28,7 +28,6 @@ public class RingControl {
         ringintake.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         ringintake.setPower(0);
 
-        bucketservo.setPosition(.4);
     }
     public void DriverControlledRingIntake(double ringpower){
         ringintake.setPower(ringpower);

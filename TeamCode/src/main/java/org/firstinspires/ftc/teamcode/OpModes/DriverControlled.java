@@ -108,23 +108,23 @@ public class DriverControlled extends LinearOpMode {
                 else {
                     robot.getRingControl().ConstantRingShooter(0);
                 }
-            if (gamepad2.left_trigger != 0){
+                if (gamepad2.left_trigger != 0){
                 robot.getRingControl().ConstantRingShooter(0.7);
-            }
-            else if (gamepad2.left_trigger == 0 && shooting) {
+                 }
+                else if (gamepad2.left_trigger == 0 && shooting) {
                 robot.getRingControl().ConstantRingShooter(YEETFORCE_SET);
-            }
+                }
 
                 //Move the wobble goal arm
                 if (gamepad2.left_stick_y != 0) {
-                    robot.getWobbleGripper().setArmPower(gamepad2.left_stick_y);
+                    robot.getWobbleGripper().setArmPower(gamepad2.left_stick_y * 0.2);
                 }
 
                 //Activates the servo to push the ring into the shooter
                 if (gamepad2.right_trigger != 0){
-                    robot.getRingControl().DriverControlledRingShooter(0.2);
+                    robot.getRingControl().DriverControlledRingShooter(0.24);
                 }
-                else robot.getRingControl().DriverControlledRingShooter(0.45);
+                else robot.getRingControl().DriverControlledRingShooter(0.5);
 
                 telemetry.update();
                 telemetry.clearAll();
