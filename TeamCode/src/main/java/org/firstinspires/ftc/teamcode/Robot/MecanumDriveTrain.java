@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Robot;
 import android.graphics.Color;
 
 import com.qualcomm.hardware.rev.RevColorSensorV3;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.Range;
 
@@ -40,6 +41,8 @@ public class MecanumDriveTrain {
         right_back  = robot.opMode.hardwareMap.get(DcMotorEx.class, "right_back");
 
         colorSensor = robot.opMode.hardwareMap.get(RevColorSensorV3.class, "colorSensor");
+
+
 
 
 
@@ -81,10 +84,10 @@ public class MecanumDriveTrain {
         // end power init
 
         //Calculate Each Wheel Drive Power based on x, y and rot values from gamepad
-        power_left_front = y + x -rot;
-        power_left_back = y - x + rot;
+        power_left_front  = y + x + rot;
+        power_left_back   = y - x + rot;
         power_right_front = y - x - rot;
-        power_right_back = y + x - rot;
+        power_right_back  = y + x - rot;
 
         left_front.setPower(power_left_front   * speedreduction);
         left_back.setPower(power_left_back     * speedreduction);
@@ -201,10 +204,10 @@ public class MecanumDriveTrain {
         right_back.setPower(0);
     }
     public void imuTurnGlobal(double targetangle, boolean eBrake){
-        //Assumes Heading of 0 at initilization and orientation is placed by the team.
+        //Assumes Heading of 0 at initialization and orientation is placed by the team.
         double errorangle = 1;
-        double minerror=0;
-        double maxerror=0;
+        double minerror = 0;
+        double maxerror = 0;
         double currentangle;
         double totalarc;
         double throttle;
@@ -218,7 +221,7 @@ public class MecanumDriveTrain {
         totalarc = targetangle - currentangle;
 
         while ((currentangle > maxerror || currentangle < minerror) && !eBrake){
-            if (((targetangle - currentangle) / totalarc) < .7) {
+            if (((targetangle - currentangle) / totalarc) < 0.7) {
                 throttle = 0.5;
             }
             else {
@@ -227,16 +230,16 @@ public class MecanumDriveTrain {
 
 
             if (currentangle > targetangle){
-                robot.driveTrain.left_front.setPower(.3   * throttle);
-                robot.driveTrain.left_back.setPower(.3    * throttle);
-                robot.driveTrain.right_front.setPower(-.3 * throttle);
-                robot.driveTrain.right_back.setPower(-.3  * throttle);
+                robot.driveTrain.left_front.setPower(0.3   * throttle);
+                robot.driveTrain.left_back.setPower(0.3    * throttle);
+                robot.driveTrain.right_front.setPower(-0.3 * throttle);
+                robot.driveTrain.right_back.setPower(-0.3  * throttle);
             }
             if (currentangle < targetangle){
-                robot.driveTrain.left_front.setPower(-.3 * throttle);
-                robot.driveTrain.left_back.setPower(-.3  * throttle);
-                robot.driveTrain.right_front.setPower(.3 * throttle);
-                robot.driveTrain.right_back.setPower(.3  * throttle);
+                robot.driveTrain.left_front.setPower(-0.3 * throttle);
+                robot.driveTrain.left_back.setPower(-0.3  * throttle);
+                robot.driveTrain.right_front.setPower(0.3 * throttle);
+                robot.driveTrain.right_back.setPower(0.3  * throttle);
             }
             currentangle = robot.imuControl.readimuheading();
 
@@ -347,10 +350,14 @@ public class MecanumDriveTrain {
             // Stop all motion;
             left_front.setPower(0);
             right_front.setPower(0);
+            left_back.setPower(0);
+            right_back.setPower(0);
 
             // Turn off RUN_TO_POSITION
             left_front.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
             right_front.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+            left_back.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            right_back.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         
     }
     public void gyroTurn( double speed, double angle) {
@@ -387,7 +394,9 @@ public class MecanumDriveTrain {
         left_front.setPower(leftSpeed);
         right_front.setPower(rightSpeed);
         left_back.setPower(leftSpeed);
+        right_back.setPower(rightSpeed);
 
+        // Display it for the driver.
         // Display it for the driver.
         robot.opMode.telemetry.addData("Target", "%5.2f", angle);
         robot.opMode.telemetry.addData("Err/St", "%5.2f/%5.2f", error, steer);

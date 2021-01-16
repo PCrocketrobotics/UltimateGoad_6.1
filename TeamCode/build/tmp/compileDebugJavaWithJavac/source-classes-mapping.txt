@@ -12,11 +12,13 @@ org/firstinspires/ftc/teamcode/OpModes/ColorSensor.java
  org.firstinspires.ftc.teamcode.OpModes.ColorSensor$2
 org/firstinspires/ftc/teamcode/Robot/ComputerVision.java
  org.firstinspires.ftc.teamcode.Robot.ComputerVision
+org/firstinspires/ftc/teamcode/OpModes/Autonomous_Red.java
+ org.firstinspires.ftc.teamcode.OpModes.Autonomous_Red
 org/firstinspires/ftc/teamcode/BuildConfig.java
  org.firstinspires.ftc.teamcode.BuildConfig
 org/firstinspires/ftc/teamcode/OpModes/DriverControlled.java
  org.firstinspires.ftc.teamcode.OpModes.DriverControlled
-org/firstinspires/ftc/teamcode/OpModes/Autonomous.java
- org.firstinspires.ftc.teamcode.OpModes.Autonomous
+org/firstinspires/ftc/teamcode/OpModes/Autonomous_Blue.java
+ org.firstinspires.ftc.teamcode.OpModes.Autonomous_Blue
 org/firstinspires/ftc/teamcode/Robot/IMUControl.java
  org.firstinspires.ftc.teamcode.Robot.IMUControl

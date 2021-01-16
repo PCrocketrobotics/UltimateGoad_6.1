@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Robot;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 public class WobbleGripper {
@@ -18,6 +19,7 @@ public class WobbleGripper {
         //Wheel Drive Motors Setup
         wobbleservo = robot.opMode.hardwareMap.get(Servo.class, "wobbleservo");
         wobblearmmotor =   robot.opMode.hardwareMap.get(DcMotorEx.class, "wobblearmmotor");
+        wobblearmmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         wobbleservo.setPosition(0);
     }
 
