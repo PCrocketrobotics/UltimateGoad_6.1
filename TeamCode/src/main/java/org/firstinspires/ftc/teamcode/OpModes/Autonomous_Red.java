@@ -22,52 +22,104 @@ public class Autonomous_Red extends LinearOpMode {
         robot.getDriveTrain().init();
         robot.getComputerVision().init();
         robot.getImuControl().init();
-        robot.getImuControl().readimuheading();
         robot.getRingControl().init();
-        robot.getWobbleGripper().init();
         sleep(500);
         
         ElapsedTime timer = new ElapsedTime();
         int count = 0;
 
         while (inInitializationState()) {
-            telemetry.addData("Imu", robot.getImuControl().readimuheading());
-            telemetry.update();
+
         }
         if (opModeIsActive()) {
+            while (opModeIsActive()) {
+                robot.getRingControl().DriverControlledRingShooter(0.5);
+                robot.getDriveTrain().gyroDrive(-6, -6, -6, -6, 0.2, 1);
+                robot.getDriveTrain().gyroTurn(0.2, 18);
+                ringpattern = robot.getComputerVision().detect();
+                sleep(500);
+                ringpattern = robot.getComputerVision().detect();
+                sleep(500);
+                ringpattern = robot.getComputerVision().detect();
+                sleep(500);
 
-            telemetry.addData("Imu", robot.getImuControl().readimuheading());
-            telemetry.update();
-            robot.getRingControl().DriverControlledRingShooter(.5);
+                //looks at the amount of rings and returns a value based on how many it sees
+                if (ringpattern == "None") {
+                    Target_Zone = 0 ;
+                }
+                else if (ringpattern == "Single") {
+                    Target_Zone = 1 ;
+                }
+                else if (ringpattern == "Quad") {
+                    Target_Zone = 4 ;
+                }
+                telemetry.addData("ring patter", ringpattern);
+                telemetry.addData("TargetZone", Target_Zone);
+                telemetry.addData("", "----------------------------");
+                telemetry.addData("sec", String.format("%.2f", timer.seconds()));
 
-            robot.getDriveTrain().gyroDrive(-46.5, -46.5, -46.5, -46.5, .3, 1);
+                telemetry.addData(">", "Press Play to Start");
+                telemetry.update();
+                sleep(2000);
+                if (Target_Zone == 0) {
+                    break;
+                }
+                else if (Target_Zone == 1) {
+                    break;
+                }
+                else if (Target_Zone == 4) {
+                    break;
+                }
+
+            }
+            robot.getDriveTrain().gyroTurn(0.2, 0);
+            robot.getDriveTrain().gyroDrive(-42, -42, -42, -42, .3, 1);
+            robot.getDriveTrain().gyroTurn(0.2, 9);
+            sleep(500);
             robot.getRingControl().ConstantRingShooter(0.9);
             sleep(1000);
             robot.getRingControl().DriverControlledRingShooter(0.24);
             sleep(500);
             robot.getRingControl().DriverControlledRingShooter(0.5);
-            sleep(1000);
+            sleep(500);
             robot.getRingControl().DriverControlledRingShooter(0.24);
             sleep(500);
             robot.getRingControl().DriverControlledRingShooter(0.5);
-            sleep(1000);
+            sleep(500);
             robot.getRingControl().DriverControlledRingShooter(0.24);
             sleep(500);
             robot.getRingControl().DriverControlledRingShooter(0.5);
-            sleep(1000);
-            robot.getDriveTrain().moveToColor("white", -0.1);
+            sleep(500);
+            robot.getRingControl().ConstantRingShooter(0);
+            robot.getDriveTrain().gyroTurn(.2, 0);
+
+            if (Target_Zone == 0) {
+                robot.getDriveTrain().moveToColor("white", -0.2);
 
             }
+            if (Target_Zone == 1) {
+                robot.getDriveTrain().moveToColor("white", -0.2);
+                robot.getDriveTrain().gyroTurn(.2, 90);
+                robot.getDriveTrain().gyroDrive(-12, -12, -12, -12, 0.3, 1);
+                robot.getDriveTrain().gyroDrive(-8, 8, 8, -8, 0.3, 1);
+                sleep(1000);
+                robot.getDriveTrain().gyroDrive(8, -8, -8, 8, 0.3, 1);
+
+            }
+            if (Target_Zone == 4) {
+                robot.getDriveTrain().moveToColor("white", -0.2);
+                robot.getDriveTrain().moveToColor("red", -0.2);
+                robot.getDriveTrain().gyroDrive(-3, -3, -3, -3, 0.2, 1);
+                robot.getDriveTrain().moveToColor("red", -0.2);
+                robot.getDriveTrain().gyroDrive(-5, -5, -5, -5, .2, 1);
+                robot.getDriveTrain().moveToColor("white", 0.2);
+                
+            }
+
+
+
+
+        }
 
     }
-
 }
-
-
-
-
-
-
-
-
-

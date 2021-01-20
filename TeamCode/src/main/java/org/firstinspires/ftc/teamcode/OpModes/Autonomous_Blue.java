@@ -22,6 +22,7 @@ public class Autonomous_Blue extends LinearOpMode {
         robot.getDriveTrain().init();
         robot.getComputerVision().init();
         robot.getImuControl().init();
+        robot.getRingControl().init();
         sleep(500);
         
         ElapsedTime timer = new ElapsedTime();
@@ -32,6 +33,13 @@ public class Autonomous_Blue extends LinearOpMode {
         }
         if (opModeIsActive()) {
             while (opModeIsActive()) {
+                robot.getRingControl().DriverControlledRingShooter(0.5);
+                robot.getDriveTrain().gyroDrive(-6, -6, -6, -6, 0.2, 1);
+                robot.getDriveTrain().gyroTurn(0.2, -18);
+                ringpattern = robot.getComputerVision().detect();
+                sleep(500);
+                ringpattern = robot.getComputerVision().detect();
+                sleep(500);
                 ringpattern = robot.getComputerVision().detect();
                 sleep(500);
 
@@ -52,7 +60,7 @@ public class Autonomous_Blue extends LinearOpMode {
 
                 telemetry.addData(">", "Press Play to Start");
                 telemetry.update();
-                sleep(1400);
+                sleep(2000);
                 if (Target_Zone == 0) {
                     break;
                 }
@@ -64,78 +72,51 @@ public class Autonomous_Blue extends LinearOpMode {
                 }
 
             }
-            robot.getRingControl().DriverControlledRingShooter(.45);
+            robot.getDriveTrain().gyroTurn(0.2, 0);
+            robot.getDriveTrain().gyroDrive(-42, -42, -42, -42, .3, 1);
+            robot.getDriveTrain().gyroTurn(0.2, -9);
+            sleep(500);
+            robot.getRingControl().ConstantRingShooter(0.9);
+            sleep(1000);
+            robot.getRingControl().DriverControlledRingShooter(0.24);
+            sleep(500);
+            robot.getRingControl().DriverControlledRingShooter(0.5);
+            sleep(500);
+            robot.getRingControl().DriverControlledRingShooter(0.24);
+            sleep(500);
+            robot.getRingControl().DriverControlledRingShooter(0.5);
+            sleep(500);
+            robot.getRingControl().DriverControlledRingShooter(0.24);
+            sleep(500);
+            robot.getRingControl().DriverControlledRingShooter(0.5);
+            sleep(500);
+            robot.getRingControl().ConstantRingShooter(0);
+            robot.getDriveTrain().gyroTurn(.2, 0);
+
             if (Target_Zone == 0) {
-                robot.getDriveTrain().moveToColor("blue", .2);
-                //robot.getDriveTrain().gyroDrive(); Move forward a bit.
-                //robot.getDriveTrain().gyroDrive(); Strafe to the left.
-                //robot.getWobbleGripper().autonomousArmMovement(); Move wobble goal into position.
-                //robot.getWobbleGripper().setWobbleGripper(); Release wobble goal.
-                //robot.getWobbleGripper().autonomousArmMovement(); Move arm back to original position.
-                //robot.getDriveTrain().gyroDrive(); Move back slightly to be behind white line.
-                //robot.getRingControl().ConstantRingShooter(); Set speed of shooters where necessary.
-                //robot.getDriveTrain().gyroTurn(); Turn degrees to aim at 1st powershot.
-                //robot.getRingControl().DriverControlledRingShooter(.2);
-                //robot.getRingControl().DriverControlledRingShooter(.45);
-                //robot.getDriveTrain().gyroTurn(); Turn to aim at 2nd powershot.
-                //robot.getRingControl().DriverControlledRingShooter(.2);
-                //robot.getRingControl().DriverControlledRingShooter(.45);
-                //robot.getDriveTrain().gyroTurn(); Turn to aim at 3rd powershot.
-                //robot.getRingControl().DriverControlledRingShooter(.2);
-                //robot.getRingControl().DriverControlledRingShooter(.45);
-                //robot.getDriveTrain().moveToColor("white", .3); Move back to white
-                //robot.getRingControl().ConstantRingShooter(0); Set speed of motors to 0.
-                //robot.getWobbleGripper().setWobbleGripper(); Move wobble gripper back to original position.
+                robot.getDriveTrain().moveToColor("white", -0.2);
 
             }
             if (Target_Zone == 1) {
-                robot.getDriveTrain().moveToColor("white", .2);
-                //robot.getDriveTrain().gyroDrive(); Strafe to the left.
-                //robot.getDriveTrain().gyroTurn(); Pivot 90 degrees to face the spot.
-                //robot.getWobbleGripper().autonomousArmMovement(); Move wobble goal into position.
-                //robot.getWobbleGripper().setWobbleGripper(); Release wobble goal.
-                //robot.getWobbleGripper().autonomousArmMovement(); Move arm back to original position.
-                //robot.getDriveTrain().gyroTurn(); Pivot 90 degrees back.
-                //robot.getDriveTrain().gyroDrive(); Back up slightly behind white line.
-                //robot.getRingControl().ConstantRingShooter(); Set speed of motors.
-                //robot.getDriveTrain().gyroTurn(); Turn degrees to aim at 1st powershot.
-                //robot.getRingControl().DriverControlledRingShooter(.2);
-                //robot.getRingControl().DriverControlledRingShooter(.45);
-                //robot.getDriveTrain().gyroTurn(); Turn to aim at 2nd powershot.
-                //robot.getRingControl().DriverControlledRingShooter(.2);
-                //robot.getRingControl().DriverControlledRingShooter(.45);
-                //robot.getDriveTrain().gyroTurn(); Turn to aim at 3rd powershot.
-                //robot.getRingControl().DriverControlledRingShooter(.2);
-                //robot.getRingControl().DriverControlledRingShooter(.45);
-                //robot.getDriveTrain().moveToColor("white", .3); Move back to white.
-                //robot.getRingControl().ConstantRingShooter(0); Set speed of motors to 0.
+                robot.getDriveTrain().moveToColor("white", -0.2);
+                robot.getDriveTrain().gyroTurn(.2, -90);
+                robot.getDriveTrain().gyroDrive(-12, -12, -12, -12, 0.3, 1);
+                robot.getDriveTrain().gyroDrive(8, -8, -8, 8, 0.3, 1);
+                sleep(1000);
+                robot.getDriveTrain().gyroDrive(-8, 8, 8, -8, 0.3, 1);
 
             }
             if (Target_Zone == 4) {
-                robot.getDriveTrain().moveToColor("white", .2);
-                robot.getDriveTrain().moveToColor("blue", .2);
-                robot.getDriveTrain().gyroDrive(3, 3, 3, 3, .2, 1);
-                robot.getDriveTrain().moveToColor("blue", .2);
-                //robot.getDriveTrain().gyroDrive(); Move forward a bit.
-                //robot.getDriveTrain().gyroDrive(); Strafe to the left.
-                //robot.getWobbleGripper().autonomousArmMovement(); Move wobble goal into position.
-                //robot.getWobbleGripper().setWobbleGripper(); Release wobble goal.
-                //robot.getWobbleGripper().autonomousArmMovement(); Move arm back to original position.
-                //robot.getDriveTrain().moveToColor("white", .2); Move back to white.
-                //robot.getRingControl().ConstantRingShooter(); Set speed of motors.
-                //robot.getDriveTrain().gyroTurn(); Turn degrees to aim at 1st powershot.
-                //robot.getRingControl().DriverControlledRingShooter(.2);
-                //robot.getRingControl().DriverControlledRingShooter(.45);
-                //robot.getDriveTrain().gyroTurn(); Turn to aim at 2nd powershot.
-                //robot.getRingControl().DriverControlledRingShooter(.2);
-                //robot.getRingControl().DriverControlledRingShooter(.45);
-                //robot.getDriveTrain().gyroTurn(); Turn to aim at 3rd powershot.
-                //robot.getRingControl().DriverControlledRingShooter(.2);
-                //robot.getRingControl().DriverControlledRingShooter(.45);
-                //robot.getDriveTrain().moveToColor("white", .3); Move back to white.
-                //robot.getRingControl().ConstantRingShooter(0); Set speed of motors to 0.
-
+                robot.getDriveTrain().moveToColor("white", -0.2);
+                robot.getDriveTrain().moveToColor("blue", -0.2);
+                robot.getDriveTrain().gyroDrive(-3, -3, -3, -3, 0.2, 1);
+                robot.getDriveTrain().moveToColor("blue", -0.2);
+                robot.getDriveTrain().gyroDrive(-5, -5, -5, -5, 0.2, 1);
+                robot.getDriveTrain().moveToColor("white", 0.2);
+                
             }
+
+
 
 
         }

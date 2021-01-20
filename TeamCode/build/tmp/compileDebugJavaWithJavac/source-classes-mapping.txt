@@ -18,6 +18,8 @@ org/firstinspires/ftc/teamcode/BuildConfig.java
  org.firstinspires.ftc.teamcode.BuildConfig
 org/firstinspires/ftc/teamcode/OpModes/DriverControlled.java
  org.firstinspires.ftc.teamcode.OpModes.DriverControlled
+org/firstinspires/ftc/teamcode/OpModes/Autonomous_Basic.java
+ org.firstinspires.ftc.teamcode.OpModes.Autonomous_Basic
 org/firstinspires/ftc/teamcode/OpModes/Autonomous_Blue.java
  org.firstinspires.ftc.teamcode.OpModes.Autonomous_Blue
 org/firstinspires/ftc/teamcode/Robot/IMUControl.java
