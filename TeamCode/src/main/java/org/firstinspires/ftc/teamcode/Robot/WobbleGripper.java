@@ -25,11 +25,13 @@ public class WobbleGripper {
 
     public  void  setArmPower(double wobblepower) {
         wobblearmmotor.setPower(wobblepower);
+        while (wobblearmmotor.isBusy()); {
+
+        }
     };
 
-    public void autonomousArmMovement(double wobblepower, int wobbledistance) {
+    public void autonomousArmMovement(double wobblepower) {
         wobblearmmotor.setPower(wobblepower);
-        wobblearmmotor.setTargetPosition(wobbledistance);
     }
 
     public void setWobbleGripper(double wobbleposition){

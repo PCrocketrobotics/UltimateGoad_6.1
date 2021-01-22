@@ -6,9 +6,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Robot.Robot;
 
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Autonomous Blue", group="Production")
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Autonomous Blue 2", group="Production")
 
-public class Autonomous_Blue extends LinearOpMode {
+public class Autonomous_Blue_2 extends LinearOpMode {
     Robot robot = new Robot (this);
     int Target_Zone;
     boolean run;
@@ -23,6 +23,7 @@ public class Autonomous_Blue extends LinearOpMode {
         robot.getComputerVision().init();
         robot.getImuControl().init();
         robot.getRingControl().init();
+        robot.getWobbleGripper().init();
         sleep(500);
         
         ElapsedTime timer = new ElapsedTime();
@@ -35,7 +36,7 @@ public class Autonomous_Blue extends LinearOpMode {
             while (opModeIsActive()) {
                 robot.getRingControl().DriverControlledRingShooter(0.5);
                 robot.getDriveTrain().gyroDrive(-6, -6, -6, -6, 0.2, 1);
-                robot.getDriveTrain().gyroTurn(0.2, -18);
+                robot.getDriveTrain().gyroTurn(0.2, 18);
                 ringpattern = robot.getComputerVision().detect();
                 sleep(500);
                 ringpattern = robot.getComputerVision().detect();
@@ -73,11 +74,10 @@ public class Autonomous_Blue extends LinearOpMode {
 
             }
             robot.getDriveTrain().gyroTurn(0.2, 0);
-            robot.getDriveTrain().gyroDrive(-42, -42, -42, -42, .3, 1);
-            robot.getDriveTrain().gyroTurn(0.2, -9);
-            sleep(500);
             robot.getRingControl().ConstantRingShooter(0.9);
-            sleep(1000);
+            robot.getDriveTrain().gyroDrive(-42, -42, -42, -42, .3, 1);
+            robot.getDriveTrain().gyroTurn(0.2, 6);
+            sleep(500);
             robot.getRingControl().DriverControlledRingShooter(0.24);
             sleep(500);
             robot.getRingControl().DriverControlledRingShooter(0.5);
@@ -95,24 +95,46 @@ public class Autonomous_Blue extends LinearOpMode {
 
             if (Target_Zone == 0) {
                 robot.getDriveTrain().moveToColor("white", -0.2);
+                robot.getDriveTrain().gyroDrive(15, -15, -15, 15, .3, 1);
+                robot.getDriveTrain().gyroTurn(.2, 180);
+                robot.getWobbleGripper().autonomousArmMovement(-0.5);
+                sleep(2000);
+                robot.getWobbleGripper().autonomousArmMovement(0);
+                robot.getWobbleGripper().setWobbleGripper(0.7);
+                robot.getWobbleGripper().autonomousArmMovement(0.75);
+                sleep(2000);
+                robot.getWobbleGripper().autonomousArmMovement(0);
 
             }
             if (Target_Zone == 1) {
                 robot.getDriveTrain().moveToColor("white", -0.2);
-                robot.getDriveTrain().gyroTurn(.2, -90);
+                robot.getDriveTrain().gyroTurn(.2, 90);
                 robot.getDriveTrain().gyroDrive(-12, -12, -12, -12, 0.3, 1);
-                robot.getDriveTrain().gyroDrive(8, -8, -8, 8, 0.3, 1);
-                sleep(1000);
-                robot.getDriveTrain().gyroDrive(-8, 8, 8, -8, 0.3, 1);
+                robot.getWobbleGripper().autonomousArmMovement(-0.5);
+                sleep(2000);
+                robot.getWobbleGripper().autonomousArmMovement(0);
+                robot.getWobbleGripper().setWobbleGripper(0.7);
+                robot.getWobbleGripper().autonomousArmMovement(0.75);
+                sleep(2000);
+                robot.getWobbleGripper().autonomousArmMovement(0);
 
             }
             if (Target_Zone == 4) {
                 robot.getDriveTrain().moveToColor("white", -0.2);
+                robot.getDriveTrain().gyroDrive(14, -14, -14, 14, .3, 1);
                 robot.getDriveTrain().moveToColor("blue", -0.2);
                 robot.getDriveTrain().gyroDrive(-3, -3, -3, -3, 0.2, 1);
                 robot.getDriveTrain().moveToColor("blue", -0.2);
                 robot.getDriveTrain().gyroDrive(-5, -5, -5, -5, 0.2, 1);
-                robot.getDriveTrain().moveToColor("white", 0.2);
+                robot.getDriveTrain().gyroTurn(.2, 180);
+                robot.getWobbleGripper().autonomousArmMovement(-0.5);
+                sleep(2000);
+                robot.getWobbleGripper().autonomousArmMovement(0);
+                robot.getWobbleGripper().setWobbleGripper(0.7);
+                robot.getWobbleGripper().autonomousArmMovement(0.75);
+                sleep(2000);
+                robot.getWobbleGripper().autonomousArmMovement(0);
+                robot.getDriveTrain().moveToColor("white", -0.2);
                 
             }
 

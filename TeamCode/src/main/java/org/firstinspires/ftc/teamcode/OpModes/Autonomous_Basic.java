@@ -31,6 +31,8 @@ public class Autonomous_Basic extends LinearOpMode {
         int count = 0;
 
         while (inInitializationState()) {
+            robot.getWobbleGripper().setWobbleGripper(0);
+
             telemetry.addData("Imu", robot.getImuControl().readimuheading());
             telemetry.update();
         }

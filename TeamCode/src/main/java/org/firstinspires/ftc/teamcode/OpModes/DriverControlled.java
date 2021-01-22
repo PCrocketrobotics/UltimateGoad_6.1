@@ -93,7 +93,7 @@ public class DriverControlled extends LinearOpMode {
             //Gamepad 2 ----------------------------------------------------------------------------
 
             //Gripper servo to grab or drop the wobble goal
-            if (gamepad2.a) robot.getWobbleGripper().setWobbleGripper(0.2);
+            if (gamepad2.a) robot.getWobbleGripper().setWobbleGripper(0.7);
             else robot.getWobbleGripper().setWobbleGripper(0.0);
 
 
