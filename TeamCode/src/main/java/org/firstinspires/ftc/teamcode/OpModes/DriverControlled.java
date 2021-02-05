@@ -27,6 +27,8 @@ public class DriverControlled extends LinearOpMode {
     boolean slowmo   = false;
     boolean changed  = false; //Outside of loop()
     boolean shooting = false;
+    boolean shooting2 = false;
+    boolean changed3 = false;
     boolean changed2 = false; //Outside of loop()
     double  speedreduction;
     double  ringtogglespeed;
@@ -85,7 +87,8 @@ public class DriverControlled extends LinearOpMode {
 
 
             //Bucket Servo Controls TEMP*******************
-            double YEETFORCE_SET = 0.9;
+            double YEETFORCE_SET = 0.95;
+            double POWERFORCE_SET = 0.85;
 
 
 
@@ -106,16 +109,23 @@ public class DriverControlled extends LinearOpMode {
                 changed2 = true;
             } else if(!gamepad2.x) changed2 = false;
 
+            if(gamepad2.b && !changed3) {
+                shooting2 = !shooting2;
+                changed3 = true;
+            } else if(!gamepad2.b) changed3 = false;
+
             //Normal fire speed
             if (shooting) robot.getRingControl().ConstantRingShooter(YEETFORCE_SET);
-            else robot.getRingControl().ConstantRingShooter(0);
+            else if (!shooting && !shooting2) robot.getRingControl().ConstantRingShooter(0);
 
             //Dampened fire speed
-            if (gamepad2.left_trigger != 0){
-                robot.getRingControl().ConstantRingShooter(0.7);
-             }
-            else if (gamepad2.left_trigger == 0 && shooting) {
+            if (shooting) {
                 robot.getRingControl().ConstantRingShooter(YEETFORCE_SET);
+            }
+
+
+            if (shooting2) {
+                robot.getRingControl().ConstantRingShooter(POWERFORCE_SET);
             }
 
 

@@ -75,7 +75,7 @@ public class MecanumDriveTrain {
         double y = robot.opMode.gamepad1.left_stick_y; // Driver Forward / Revers
         double x = robot.opMode.gamepad1.left_stick_x; // Strafe Control
         double rot = robot.opMode.gamepad1.right_stick_x; //Rotation Control
-        y = y * -1;
+        x = x * -1;
         //Init and Set all Power Variable to 0
         double power_left_front = 0;
         double power_left_back = 0;

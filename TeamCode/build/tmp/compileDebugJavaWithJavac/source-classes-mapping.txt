@@ -1,26 +1,30 @@
-org/firstinspires/ftc/teamcode/Robot/WobbleGripper.java
- org.firstinspires.ftc.teamcode.Robot.WobbleGripper
 org/firstinspires/ftc/teamcode/Robot/RingControl.java
  org.firstinspires.ftc.teamcode.Robot.RingControl
-org/firstinspires/ftc/teamcode/Robot/Robot.java
- org.firstinspires.ftc.teamcode.Robot.Robot
-org/firstinspires/ftc/teamcode/Robot/MecanumDriveTrain.java
- org.firstinspires.ftc.teamcode.Robot.MecanumDriveTrain
-org/firstinspires/ftc/teamcode/OpModes/ColorSensor.java
- org.firstinspires.ftc.teamcode.OpModes.ColorSensor
- org.firstinspires.ftc.teamcode.OpModes.ColorSensor$1
- org.firstinspires.ftc.teamcode.OpModes.ColorSensor$2
+org/firstinspires/ftc/teamcode/OpModes/Autonomous_Red_1.java
+ org.firstinspires.ftc.teamcode.OpModes.Autonomous_Red_1
 org/firstinspires/ftc/teamcode/Robot/ComputerVision.java
  org.firstinspires.ftc.teamcode.Robot.ComputerVision
-org/firstinspires/ftc/teamcode/OpModes/Autonomous_Red.java
- org.firstinspires.ftc.teamcode.OpModes.Autonomous_Red
-org/firstinspires/ftc/teamcode/BuildConfig.java
- org.firstinspires.ftc.teamcode.BuildConfig
+org/firstinspires/ftc/teamcode/OpModes/Autonomous_Blue_1.java
+ org.firstinspires.ftc.teamcode.OpModes.Autonomous_Blue_1
 org/firstinspires/ftc/teamcode/OpModes/DriverControlled.java
  org.firstinspires.ftc.teamcode.OpModes.DriverControlled
 org/firstinspires/ftc/teamcode/OpModes/Autonomous_Basic.java
  org.firstinspires.ftc.teamcode.OpModes.Autonomous_Basic
-org/firstinspires/ftc/teamcode/OpModes/Autonomous_Blue.java
- org.firstinspires.ftc.teamcode.OpModes.Autonomous_Blue
 org/firstinspires/ftc/teamcode/Robot/IMUControl.java
  org.firstinspires.ftc.teamcode.Robot.IMUControl
+org/firstinspires/ftc/teamcode/Robot/WobbleGripper.java
+ org.firstinspires.ftc.teamcode.Robot.WobbleGripper
+org/firstinspires/ftc/teamcode/OpModes/Autonomous_Blue_2.java
+ org.firstinspires.ftc.teamcode.OpModes.Autonomous_Blue_2
+org/firstinspires/ftc/teamcode/Robot/Robot.java
+ org.firstinspires.ftc.teamcode.Robot.Robot
+org/firstinspires/ftc/teamcode/Robot/MecanumDriveTrain.java
+ org.firstinspires.ftc.teamcode.Robot.MecanumDriveTrain
+org/firstinspires/ftc/teamcode/OpModes/Autonomous_Red_2.java
+ org.firstinspires.ftc.teamcode.OpModes.Autonomous_Red_2
+org/firstinspires/ftc/teamcode/OpModes/ColorSensor.java
+ org.firstinspires.ftc.teamcode.OpModes.ColorSensor
+ org.firstinspires.ftc.teamcode.OpModes.ColorSensor$1
+ org.firstinspires.ftc.teamcode.OpModes.ColorSensor$2
+org/firstinspires/ftc/teamcode/BuildConfig.java
+ org.firstinspires.ftc.teamcode.BuildConfig

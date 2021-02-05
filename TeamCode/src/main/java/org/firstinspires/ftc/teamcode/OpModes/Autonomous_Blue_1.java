@@ -36,7 +36,7 @@ public class Autonomous_Blue_1 extends LinearOpMode {
             while (opModeIsActive()) {
                 robot.getRingControl().DriverControlledRingShooter(0.5);
                 robot.getDriveTrain().gyroDrive(-6, -6, -6, -6, 0.2, 1);
-                robot.getDriveTrain().gyroTurn(0.2, 10);
+                robot.getDriveTrain().gyroTurn(0.2, -10);
                 ringpattern = robot.getComputerVision().detect();
                 sleep(500);
                 ringpattern = robot.getComputerVision().detect();
@@ -74,9 +74,9 @@ public class Autonomous_Blue_1 extends LinearOpMode {
 
             }
             robot.getDriveTrain().gyroTurn(0.2, 0);
-            robot.getRingControl().ConstantRingShooter(0.9);
+            robot.getRingControl().ConstantRingShooter(1.0);
             robot.getDriveTrain().gyroDrive(-42, -42, -42, -42, .3, 1);
-            robot.getDriveTrain().gyroTurn(0.2, 9);
+            robot.getDriveTrain().gyroTurn(0.2, -9);
             sleep(500);
             robot.getRingControl().DriverControlledRingShooter(0.24);
             sleep(500);
@@ -103,6 +103,8 @@ public class Autonomous_Blue_1 extends LinearOpMode {
                 robot.getWobbleGripper().autonomousArmMovement(0.75);
                 sleep(2000);
                 robot.getWobbleGripper().autonomousArmMovement(0);
+                robot.getDriveTrain().gyroDrive(-15, 15, 15, -15, .3, 1);
+
 
             }
             if (Target_Zone == 1) {
@@ -121,11 +123,8 @@ public class Autonomous_Blue_1 extends LinearOpMode {
 
             }
             if (Target_Zone == 4) {
-                robot.getDriveTrain().moveToColor("white", -0.2);
-                robot.getDriveTrain().moveToColor("blue", -0.2);
-                robot.getDriveTrain().gyroDrive(-3, -3, -3, -3, 0.2, 1);
-                robot.getDriveTrain().moveToColor("blue", -0.2);
-                robot.getDriveTrain().gyroDrive(-5, -5, -5, -5, 0.2, 1);
+                robot.getDriveTrain().gyroDrive(-67, -67, -67, -67, 0.2, 1);
+                robot.getDriveTrain().gyroDrive(-10, 10, 10, -10, .2, 1);
                 robot.getDriveTrain().gyroTurn(.2, 180);
                 robot.getWobbleGripper().autonomousArmMovement(-0.5);
                 sleep(2000);
