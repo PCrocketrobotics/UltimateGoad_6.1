@@ -1,5 +1,7 @@
 org/firstinspires/ftc/teamcode/Robot/RingControl.java
  org.firstinspires.ftc.teamcode.Robot.RingControl
+org/firstinspires/ftc/teamcode/OpModes/Autonomous_Blue_2_Powershot.java
+ org.firstinspires.ftc.teamcode.OpModes.Autonomous_Blue_2_Powershot
 org/firstinspires/ftc/teamcode/OpModes/Autonomous_Red_1.java
  org.firstinspires.ftc.teamcode.OpModes.Autonomous_Red_1
 org/firstinspires/ftc/teamcode/Robot/ComputerVision.java
@@ -28,3 +30,5 @@ org/firstinspires/ftc/teamcode/OpModes/ColorSensor.java
  org.firstinspires.ftc.teamcode.OpModes.ColorSensor$2
 org/firstinspires/ftc/teamcode/BuildConfig.java
  org.firstinspires.ftc.teamcode.BuildConfig
+org/firstinspires/ftc/teamcode/OpModes/Autonomous_Red_1_Powershot.java
+ org.firstinspires.ftc.teamcode.OpModes.Autonomous_Red_1_Powershot

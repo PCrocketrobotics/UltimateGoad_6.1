@@ -24,10 +24,11 @@ public class DriverControlled extends LinearOpMode {
 
     /* Declare OpMode members. */
     Robot robot      = new Robot(this);
-    boolean slowmo   = false;
+    boolean warpspeed   = false;
     boolean changed  = false; //Outside of loop()
     boolean shooting = false;
     boolean shooting2 = false;
+    boolean shooting_slow = false;
     boolean changed3 = false;
     boolean changed2 = false; //Outside of loop()
     double  speedreduction;
@@ -65,10 +66,10 @@ public class DriverControlled extends LinearOpMode {
             //Navigation
 
             //Slow Motion Toggle
-            if (slowmo == true) speedreduction = 0.2;
+            if (warpspeed == true) speedreduction = 1.0;
             else speedreduction = 0.6;
             if(gamepad1.start && !changed) {
-                slowmo = !slowmo;
+                warpspeed = !warpspeed;
                 changed = true;
             } else if(!gamepad1.start) changed = false;
 
@@ -78,17 +79,17 @@ public class DriverControlled extends LinearOpMode {
 
 
             //Ring Intake Controls
-            if (gamepad1.a)ringtogglespeed = 1.0;
-            else if (gamepad1.y) ringtogglespeed = -1.0;
-            else if (gamepad1.back) ringtogglespeed = 0.0;
+            if (gamepad1.a)ringtogglespeed = -1.0 ;
+            else if (gamepad1.y) ringtogglespeed = 1.0;
+            else if (gamepad1.dpad_down) ringtogglespeed = 0.0;
             robot.getRingControl().DriverControlledRingIntake(ringtogglespeed);
 
 
 
 
             //Bucket Servo Controls TEMP*******************
-            double YEETFORCE_SET = 0.95;
-            double POWERFORCE_SET = 0.85;
+            double YEETFORCE_SET = 1.0;
+            double POWERFORCE_SET = 0.92;
 
 
 
@@ -109,25 +110,34 @@ public class DriverControlled extends LinearOpMode {
                 changed2 = true;
             } else if(!gamepad2.x) changed2 = false;
 
+            if (gamepad2.left_trigger == 1) {
+                shooting_slow = true;
+            }
+            else shooting_slow = false;
+/*
             if(gamepad2.b && !changed3) {
                 shooting2 = !shooting2;
                 changed3 = true;
             } else if(!gamepad2.b) changed3 = false;
 
+
+ */
             //Normal fire speed
-            if (shooting) robot.getRingControl().ConstantRingShooter(YEETFORCE_SET);
-            else if (!shooting && !shooting2) robot.getRingControl().ConstantRingShooter(0);
+            if (shooting && !shooting_slow) robot.getRingControl().ConstantRingShooter(YEETFORCE_SET);
+            else if (!shooting) robot.getRingControl().ConstantRingShooter(0);
 
             //Dampened fire speed
-            if (shooting) {
-                robot.getRingControl().ConstantRingShooter(YEETFORCE_SET);
+            if (shooting_slow == true) {
+                robot.getRingControl().ConstantRingShooter(POWERFORCE_SET);
             }
 
-
+/*
             if (shooting2) {
                 robot.getRingControl().ConstantRingShooter(POWERFORCE_SET);
             }
 
+
+ */
 
 
 

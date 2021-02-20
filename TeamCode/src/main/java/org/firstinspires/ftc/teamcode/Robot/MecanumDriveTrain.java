@@ -101,39 +101,6 @@ public class MecanumDriveTrain {
                 .addData("Left",  "%.3f", power_left_back)
                 .addData("Right", "%.3f", power_right_back);
     }
-    public void AutonomousDrive(double leftFront,  double leftBack,
-                                double rightFront, double rightBack,
-                                double motor_power){
-        int new_left_front;
-        int new_left_back;
-        int new_right_front;
-        int new_right_back_target;
-
-        // Determine new target position, and pass to motor controller
-        new_left_front        = left_front.getCurrentPosition()  + (int) (COUNTS_PER_INCH_DOUBLE * leftFront);
-        new_left_back         = left_back.getCurrentPosition()   + (int) (COUNTS_PER_INCH_DOUBLE * leftBack);
-        new_right_front       = right_front.getCurrentPosition() + (int) (COUNTS_PER_INCH_DOUBLE * rightFront);
-        new_right_back_target = right_back.getCurrentPosition()  + (int) (COUNTS_PER_INCH_DOUBLE * rightBack);
-
-        right_back.setTargetPosition(new_left_front);
-        left_back.setTargetPosition(new_left_back);
-        right_front.setTargetPosition(new_right_front);
-        left_front.setTargetPosition(new_right_back_target);
-
-        left_back.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-        right_back.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-        left_front.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-        right_front.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-
-        left_back.setPower(Math.abs(motor_power));
-        right_back.setPower(Math.abs(motor_power));
-        left_front.setPower(Math.abs(motor_power));
-        right_front.setPower(Math.abs(motor_power));
-
-        while (right_back.isBusy() && left_back.isBusy() && left_front.isBusy() && right_front.isBusy()){
-
-        }
-    }
     public void moveToColor(String targetColor, double motor_power){
         //Color.RGBToHSV(colorSensor.red(), colorSensor.green(), colorSensor.blue(), hsvValues);
 
@@ -253,10 +220,6 @@ public class MecanumDriveTrain {
             robot.opMode.telemetry.update();
         }
         robot.opMode.telemetry.clearAll();
-    }
-
-    public void imuTurnLocal(double providedangle, boolean eBrake){
-        imuTurnGlobal(robot.imuControl.readimuheading() + providedangle, eBrake);
     }
 
     public void gyroDrive ( double left_front_distance,  double left_back_distance,
