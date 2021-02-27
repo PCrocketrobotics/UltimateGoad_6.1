@@ -96,7 +96,6 @@ public class Autonomous_Red_1 extends LinearOpMode {
             if (Target_Zone == 0) {
                 robot.getDriveTrain().moveToColor("white", -0.2);
                 robot.getDriveTrain().gyroDrive(-22, 22, 22, -22, 0.3, 1);
-                robot.getDriveTrain().gyroDrive(6, 6, 6, 6, 0.3, 1);
                 robot.getWobbleGripper().autonomousArmMovement(-0.5);
                 sleep(2000);
                 robot.getWobbleGripper().autonomousArmMovement(0);
@@ -104,7 +103,6 @@ public class Autonomous_Red_1 extends LinearOpMode {
                 robot.getWobbleGripper().autonomousArmMovement(0.75);
                 sleep(2000);
                 robot.getWobbleGripper().autonomousArmMovement(0);
-                robot.getDriveTrain().gyroDrive(-6, -6, -6, -6, 0.3, 1);
                 robot.getDriveTrain().gyroDrive(15, -15, -15, 15, 0.3, 1);
 
 

@@ -104,7 +104,7 @@ public class Autonomous_Blue_1 extends LinearOpMode {
                 robot.getWobbleGripper().autonomousArmMovement(0.75);
                 sleep(2000);
                 robot.getWobbleGripper().autonomousArmMovement(0);
-                robot.getDriveTrain().gyroDrive(15, -15, -15, 15, 0.3, 1);
+                robot.getDriveTrain().gyroDrive(-15, 15, 15, -15, 0.3, 1);
 
 
             }

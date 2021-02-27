@@ -71,10 +71,10 @@ public class Autonomous_Red_1_Powershot extends LinearOpMode {
             }
             robot.getDriveTrain().gyroTurn(0.2, 0);
             robot.getDriveTrain().moveToColor("white", -0.2);
-            robot.getDriveTrain().gyroDrive(8, 8, 8, 8, 0.3, 1);
+            robot.getDriveTrain().gyroDrive(12.5, 12.5, 12.5, 12.5, 0.3, 1);
             robot.getRingControl().ConstantRingShooter(0.88);
             robot.getDriveTrain().gyroTurn(0.1, 0);
-            robot.getDriveTrain().gyroDrive(16, -16, -16, 16, .3, 1);
+            robot.getDriveTrain().gyroDrive(18.5, -18.5, -18.5, 18.5, .3, 1);
             robot.getDriveTrain().gyroTurn(0.1, 0);
             robot.getRingControl().DriverControlledRingShooter(0.24);
             sleep(500);
@@ -86,6 +86,7 @@ public class Autonomous_Red_1_Powershot extends LinearOpMode {
             sleep(500);
             robot.getRingControl().DriverControlledRingShooter(0.5);
             sleep(500);
+            robot.getRingControl().ConstantRingShooter(0.86);
             robot.getDriveTrain().gyroDrive(-8, 8, 8, -8, 0.3, 1);
             robot.getDriveTrain().gyroTurn(0.1, 0);
             robot.getRingControl().DriverControlledRingShooter(0.24);
