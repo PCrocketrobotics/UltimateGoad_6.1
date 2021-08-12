@@ -27,13 +27,10 @@ public class DriverControlled extends LinearOpMode {
     boolean warpspeed   = false;
     boolean changed  = false; //Outside of loop()
     boolean shooting = false;
-    boolean shooting2 = false;
     boolean shooting_slow = false;
-    boolean changed3 = false;
     boolean changed2 = false; //Outside of loop()
     double  speedreduction;
     double  ringtogglespeed;
-    double  ringshooterspeed;
 
     @Override
     public void runOpMode() {
@@ -53,17 +50,15 @@ public class DriverControlled extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        // clear telemetry to clean up screen
+        // Clear telemetry to clean up screen.
         telemetry.clearAll();
 
 
         //PROGRAM STARTS HERE -----------------------------------------------------------------------------------------------
-        // run until the end of the match (driver presses STOP)
+        // Run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 
             //Gamepad 1 ----------------------------------------------------------------------------
-
-            //Navigation
 
             //Slow Motion Toggle
             if (warpspeed == true) speedreduction = 1.0;
@@ -76,33 +71,21 @@ public class DriverControlled extends LinearOpMode {
             //Drive using speed reduction
             robot.getDriveTrain().DriverControlled_Drive(speedreduction);
 
-
-
             //Ring Intake Controls
             if (gamepad1.a)ringtogglespeed = -1.0 ;
             else if (gamepad1.y) ringtogglespeed = 1.0;
             else if (gamepad1.dpad_down) ringtogglespeed = 0.0;
             robot.getRingControl().DriverControlledRingIntake(ringtogglespeed);
 
-
-
-
             //Bucket Servo Controls TEMP*******************
             double YEETFORCE_SET = 1.0;
             double POWERFORCE_SET = 0.92;
-
-
-
 
             //Gamepad 2 ----------------------------------------------------------------------------
 
             //Gripper servo to grab or drop the wobble goal
             if (gamepad2.a) robot.getWobbleGripper().setWobbleGripper(0.7);
             else robot.getWobbleGripper().setWobbleGripper(0.0);
-
-
-
-            //Firing
 
             //Toggle engage the constant ring shooter
             if(gamepad2.x && !changed2) {
@@ -114,14 +97,8 @@ public class DriverControlled extends LinearOpMode {
                 shooting_slow = true;
             }
             else shooting_slow = false;
-/*
-            if(gamepad2.b && !changed3) {
-                shooting2 = !shooting2;
-                changed3 = true;
-            } else if(!gamepad2.b) changed3 = false;
 
 
- */
             //Normal fire speed
             if (shooting && !shooting_slow) robot.getRingControl().ConstantRingShooter(YEETFORCE_SET);
             else if (!shooting) robot.getRingControl().ConstantRingShooter(0);
@@ -130,16 +107,6 @@ public class DriverControlled extends LinearOpMode {
             if (shooting_slow == true) {
                 robot.getRingControl().ConstantRingShooter(POWERFORCE_SET);
             }
-
-/*
-            if (shooting2) {
-                robot.getRingControl().ConstantRingShooter(POWERFORCE_SET);
-            }
-
-
- */
-
-
 
             //Move the wobble goal arm
             if (gamepad2.left_stick_y != 0) {

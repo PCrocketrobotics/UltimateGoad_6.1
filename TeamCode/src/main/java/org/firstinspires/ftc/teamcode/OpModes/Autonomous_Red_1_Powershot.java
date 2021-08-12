@@ -18,7 +18,7 @@ public class Autonomous_Red_1_Powershot extends LinearOpMode {
     }
     @Override
     public void runOpMode() {
-        String ringpattern = "";
+        String ringpattern = "";  
         robot.getDriveTrain().init();
         robot.getComputerVision().init();
         robot.getImuControl().init();

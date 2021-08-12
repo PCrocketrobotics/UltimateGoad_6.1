@@ -42,22 +42,8 @@ public class Autonomous_Basic extends LinearOpMode {
             telemetry.update();
             robot.getRingControl().DriverControlledRingShooter(.5);
 
-            robot.getDriveTrain().gyroDrive(-44.5, -44.5, -44.5, -44.5, .3, 1);
-            robot.getRingControl().ConstantRingShooter(0.9);
-            sleep(500);
-            robot.getRingControl().DriverControlledRingShooter(0.24);
-            sleep(500);
-            robot.getRingControl().DriverControlledRingShooter(0.5);
-            sleep(500);
-            robot.getRingControl().DriverControlledRingShooter(0.24);
-            sleep(500);
-            robot.getRingControl().DriverControlledRingShooter(0.5);
-            sleep(500);
-            robot.getRingControl().DriverControlledRingShooter(0.24);
-            sleep(500);
-            robot.getRingControl().DriverControlledRingShooter(0.5);
-            sleep(500);
-            robot.getDriveTrain().moveToColor("white", -0.1);
+            robot.getDriveTrain().gyroDrive(-12, -12, -12, -12, 1, 0);
+            robot.getDriveTrain().gyroDrive(12,12,12,12,1,0);
 
             }
 

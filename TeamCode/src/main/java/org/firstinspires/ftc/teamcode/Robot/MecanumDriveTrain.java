@@ -42,10 +42,6 @@ public class MecanumDriveTrain {
 
         colorSensor = robot.opMode.hardwareMap.get(RevColorSensorV3.class, "colorSensor");
 
-
-
-
-
        // Set Direction of Each Drive Motor to keep Speeds identical between all motors.
         left_front.setDirection(DcMotorEx.Direction.FORWARD);
         left_back.setDirection(DcMotorEx.Direction.FORWARD);
@@ -81,7 +77,7 @@ public class MecanumDriveTrain {
         double power_left_back = 0;
         double power_right_front = 0;
         double power_right_back = 0;
-        // end power init
+        //End power init
 
         //Calculate Each Wheel Drive Power based on x, y and rot values from gamepad
         power_left_front  = y + x + rot;
@@ -120,8 +116,6 @@ public class MecanumDriveTrain {
         float cBlue;
         float cGreen;
         float cClear;
-
-
 
         if (targetColor == "blue"){
             while (hsvValues[0] < 180) {
@@ -360,7 +354,6 @@ public class MecanumDriveTrain {
         right_back.setPower(rightSpeed);
 
         // Display it for the driver.
-        // Display it for the driver.
         robot.opMode.telemetry.addData("Target", "%5.2f", angle);
         robot.opMode.telemetry.addData("Err/St", "%5.2f/%5.2f", error, steer);
         robot.opMode.telemetry.addData("Speed.", "%5.2f:%5.2f", leftSpeed, rightSpeed);
@@ -370,7 +363,7 @@ public class MecanumDriveTrain {
     public double getError(double targetAngle) {
 
         double robotError;
-        // calculate error in -179 to +180 range  (
+        // Calculate error in -179 to +180 range  (
         robotError = targetAngle - robot.imuControl.readimuheading();
         while (robotError >   180) robotError -= 360;
         while (robotError <= -180) robotError += 360;
